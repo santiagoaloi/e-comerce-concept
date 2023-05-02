@@ -10,10 +10,10 @@
   "scripts": {
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "dev": "yarn format && vite --config ${npm_package_config_viteConfig}",
-    "build": "yarn format && vite build --config ${npm_package_config_viteConfig}",
-    "preview": "yarn build && vite preview --config ${npm_package_config_viteConfig} --open",
-    "preview:dist": "vite preview --config ${npm_package_config_viteConfig}"
+    "dev": "yarn format && vite --config ./vite/vite.config.js",
+    "build": "yarn format && vite build --config ./vite/vite.config.js",
+    "preview": "yarn build && vite preview --config ./vite/vite.config.js --open",
+    "preview:dist": "vite preview --config ./vite/vite.config.js"
   },
   "dependencies": {
     "@vueuse/core": "^10.1.0",

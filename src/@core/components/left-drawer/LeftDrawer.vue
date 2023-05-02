@@ -37,6 +37,13 @@
         title="Dashboard"
         to="/"
       />
+      <VListItem
+        :ripple="false"
+        active-color="primary"
+        prepend-icon="$mdiHomeOutline"
+        title="About"
+        to="/About"
+      />
     </VList>
   </VNavigationDrawer>
 </template>
