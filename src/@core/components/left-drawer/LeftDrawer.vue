@@ -31,18 +31,13 @@
       </div>
 
       <VListItem
+        v-for="item in menu"
+        :key="item.title"
+        :prepend-icon="item.icon"
         :ripple="false"
+        :title="item.title"
+        :to="item.to"
         active-color="primary"
-        prepend-icon="$mdiHomeOutline"
-        title="Dashboard"
-        to="/"
-      />
-      <VListItem
-        :ripple="false"
-        active-color="primary"
-        prepend-icon="$mdiHomeOutline"
-        title="About"
-        to="/About"
       />
     </VList>
   </VNavigationDrawer>
@@ -50,4 +45,12 @@
 
 <script setup>
 const rail = ref(false)
+
+const menu = [
+  { title: 'Camisetas', to: '/camisetas', icon: '$mdiTshirtCrewOutline' },
+  { title: 'sombreros', to: '/a', icon: '$mdiHatFedora' },
+  { title: 'zapatillas', to: '/b', icon: '$mdiShoeSneaker' },
+  { title: 'corbatas', to: '/c', icon: '$mdiTie' },
+  { title: 'anteojos', to: '/d', icon: '$mdiSunglasses' }
+]
 </script>
