@@ -1,3 +1,3 @@
-<template>Hello from about</template>
-
-<script setup></script>
+<template>
+  <VContainer fluid> Hello from about </VContainer>
+</template>
