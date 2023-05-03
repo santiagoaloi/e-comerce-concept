@@ -11,7 +11,16 @@
 
           <VSpacer />
 
-          <div @mousedown.stop="$emit('favorited')">
+          <VChip
+            v-if="cart.added"
+            class="bg-primary"
+            closable
+            @click:close="$emit('clearUnits')"
+            @mousedown.stop
+            >{{ cart.added }}</VChip
+          >
+
+          <div @mousedown.stop="$emit('favorite')">
             <VBtn v-if="cart.favorite" color="red" icon="$mdiHeart" size="small" variant="plain" />
             <VBtn v-else color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
           </div>
@@ -27,7 +36,7 @@
       <div class="flex">
         <div class="card-header">
           <div class="card-title-wrapper">
-            <div class="card-title text-xl font-semibold">{{ title }}</div>
+            <div class="card-title">{{ title }}</div>
           </div>
         </div>
 
@@ -48,7 +57,6 @@
 
         <VSpacer />
 
-        {{ cart }}
         <ProductCardActions
           v-for="(button, i) in buttonActions"
           :key="i"
@@ -61,7 +69,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['favorited', 'add', 'remove'])
+const emit = defineEmits(['favorite', 'add', 'remove', 'clearUnits'])
 
 defineProps({
   title: {
@@ -124,7 +132,7 @@ const buttonActions = [
 }
 
 .card-top-elements {
-  @apply flex opacity-90 items-center
+  @apply flex opacity-90 items-center text-xl font-semibold
 }
 
 .card-title {
