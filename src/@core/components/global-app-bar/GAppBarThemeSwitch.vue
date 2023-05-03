@@ -2,7 +2,6 @@
   <div>
     <VBtn
       v-if="currentTheme === 'light'"
-      color="white"
       icon="$mdiWeatherNight"
       variant="text"
       @click="currentTheme = 'dark'"
