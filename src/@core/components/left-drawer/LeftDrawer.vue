@@ -46,11 +46,5 @@
 <script setup>
 const rail = ref(false)
 
-const menu = [
-  { title: 'Camisetas', to: '/camisetas', icon: '$mdiTshirtCrewOutline' },
-  { title: 'sombreros', to: '/a', icon: '$mdiHatFedora' },
-  { title: 'zapatillas', to: '/b', icon: '$mdiShoeSneaker' },
-  { title: 'corbatas', to: '/c', icon: '$mdiTie' },
-  { title: 'anteojos', to: '/d', icon: '$mdiSunglasses' }
-]
+const menu = [{ title: 'Products', to: '/products', icon: '$mdiShoeSneaker' }]
 </script>
