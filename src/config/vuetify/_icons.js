@@ -7,5 +7,9 @@ export {
   mdiShoeSneaker,
   mdiTie,
   mdiSunglasses,
-  mdiPlus
+  mdiPlus,
+  mdiMinus,
+  mdiHeartOutline,
+  mdiHeart,
+  mdiStoreOutline
 } from '@mdi/js'
