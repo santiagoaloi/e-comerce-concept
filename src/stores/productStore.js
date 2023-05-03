@@ -2,11 +2,14 @@ import { mochilas, zapatos } from '@/data'
 
 export const useProductStore = defineStore('global-products', {
   state: () => ({
+    selectedProducts: [],
     products: [],
     productsApi: []
   }),
 
-  persist: true,
+  persist: {
+    paths: ['selectedProducts']
+  },
 
   getters: {
     addedProducts() {
