@@ -1,37 +1,68 @@
 <template>
-  <VCard :key="i" class="pa-8 active-push-down rounded-lg">
-    <div class="mb-3">
-      <VChip color="red-lighten-4">{{ discount }}% off</VChip>
-    </div>
-    <VImg :src="avatar" class="w-full rounded-lg">
-      <template #placeholder>
-        <div class="flex h-full items-center justify-center">
-          <VProgressCircular color="primary" indeterminate />
+  <ProductCard
+    :class="{ 'active-push-down': clicked }"
+    @mousedown="clicked = true"
+    @mouseup="clicked = false"
+  >
+    <div class="card-wrapper">
+      <VImg :src="avatar" class="card-image" cover height="250">
+        <div class="card-top-elements">
+          <VChip class="bg-primary">{{ discount }}% off</VChip>
+
+          <VSpacer />
+
+          <div @mousedown.stop="$emit('favorited')">
+            <VBtn v-if="cart.favorite" color="red" icon="$mdiHeart" size="small" variant="plain" />
+            <VBtn v-else color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
+          </div>
         </div>
-      </template>
-    </VImg>
 
-    <div class="flex item-center backdrop:">
-      <div class="flex flex-col my-6">
-        <h3 class="text-xl font-semibold">{{ title }}</h3>
-        <div class="text-blue-200 mt-5">{{ description }} </div>
+        <template #placeholder>
+          <div class="img-loader-spinner">
+            <VProgressCircular color="primary" indeterminate />
+          </div>
+        </template>
+      </VImg>
+
+      <div class="flex">
+        <div class="card-header">
+          <div class="card-title-wrapper">
+            <div class="card-title text-xl font-semibold">{{ title }}</div>
+          </div>
+        </div>
+
+        <div class="flex h-full pr-2">
+          <ProductCardRating :model-value="rating" />
+        </div>
       </div>
-      <VSpacer />
-      <div class="flex flex-col my-6">
-        <VRating :model-value="rating" color="yellow-darken-3" length="5" size="25" />
+
+      <div class="card-description-wrapper">
+        <div class="card-description">
+          {{ description }}
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="card-price" v-html="`$${price}`" />
+        <div class="flex line-through" v-html="`$${discountPrice}`" />
+
+        <VSpacer />
+
+        {{ cart }}
+        <ProductCardActions
+          v-for="(button, i) in buttonActions"
+          :key="i"
+          :icon="button.icon"
+          @mousedown.stop="button.action"
+        />
       </div>
     </div>
-
-    <div class="flex gap-3">
-      <div class="mt-auto flex items-center gap-x-3 text-blue">{{ price }}</div>
-      <div class="mt-auto flex items-center gap-x-3 line-through">{{ discountPrice }}</div>
-      <VSpacer />
-      <VBtn color="primary" icon="$mdiPlus" size="x-small" variant="elevated" />
-    </div>
-  </VCard>
+  </ProductCard>
 </template>
 
 <script setup>
+const emit = defineEmits(['favorited', 'add', 'remove'])
+
 defineProps({
   title: {
     type: String,
@@ -42,7 +73,7 @@ defineProps({
     default: ''
   },
   rating: {
-    type: Number,
+    type: [Number, String],
     default: 1
   },
   price: {
@@ -60,6 +91,75 @@ defineProps({
   avatar: {
     type: String,
     default: ''
+  },
+  favorite: {
+    type: Boolean,
+    default: false
+  },
+  cart: {
+    type: Object,
+    default: () => {}
   }
 })
+
+const clicked = ref(false)
+
+const buttonActions = [
+  { action: () => emit('remove'), icon: '$mdiMinus' },
+  { action: () => emit('add'), icon: '$mdiPlus' }
+]
 </script>
+
+<style scoped>
+.card { 
+  @apply p-5 rounded-lg
+}
+
+.card-wrapper {
+  @apply flex h-full flex-col gap-4
+}
+
+.card-image {
+  @apply rounded-lg p-3
+}
+
+.card-top-elements {
+  @apply flex opacity-90 items-center
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title-wrapper {
+  @apply flex items-start gap-3
+}
+
+.card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-description-wrapper {
+  @apply flex flex-col h-full
+}
+
+.card-price {
+  @apply text-green-500 flex
+}
+
+.card-header {
+  @apply flex grow h-full
+}
+
+.card-footer {
+  @apply flex items-center gap-1
+}
+</style>
