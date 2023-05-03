@@ -82,6 +82,7 @@
     "useCssVars": true,
     "useDebouncedRef": true,
     "useDisplay": true,
+    "useProductStore": true,
     "useRoute": true,
     "useRouter": true,
     "useSlots": true,
