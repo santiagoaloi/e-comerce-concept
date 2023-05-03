@@ -1,7 +1,7 @@
 import { createVuetify } from 'vuetify'
 
 // Default configurations
-import { defaults, theme, icons } from '@/config/vuetify'
+import { defaults, theme, icons, aliases as componentAliases } from '@/config/vuetify'
 
 // Dont import @/@core/scss/vuetify/_variables.scss
 // as it is imported by vuetify plugin in vite.config.js
@@ -18,9 +18,13 @@ export const install = (app) => {
         ...icons,
         ...iconAliases
       },
+
       sets: {
         mdiSvg
       }
+    },
+    aliases: {
+      ...componentAliases
     },
     theme,
     defaults
