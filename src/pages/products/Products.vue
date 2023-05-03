@@ -2,7 +2,7 @@
   <VContainer>
     <div class="product-cards-container">
       <ProductCard
-        v-for="product in products"
+        v-for="product in store.products"
         :key="product.title"
         :avatar="product.avatar"
         :cart="product._cart"
@@ -14,7 +14,8 @@
         :rating="product.rating"
         :title="product.title"
         @add="addProduct(product)"
-        @favorited="favorite(product)"
+        @clear-units="clearUnits(product)"
+        @favorite="favorite(product)"
         @remove="removeProduct(product)"
       />
     </div>
@@ -22,7 +23,11 @@
 </template>
 
 <script setup>
-const { products } = useProductStore()
+const store = useProductStore()
+
+onBeforeMount(() => {
+  store.simulateProductsGet()
+})
 
 function addProduct(product) {
   if (product._cart.added === 100) return
@@ -33,6 +38,11 @@ function addProduct(product) {
 function removeProduct(product) {
   if (!product._cart.added) return
   product._cart.added -= 1
+}
+
+function clearUnits(product) {
+  if (!product._cart.added) return
+  product._cart.added = 0
 }
 
 function favorite(product) {
