@@ -1,6 +1,5 @@
 export default {
   // Native Vuetify Components
-
   VToolbar: {
     VBtn: {
       ripple: false,
@@ -15,7 +14,8 @@ export default {
   },
 
   VCard: {
-    flat: true
+    flat: false,
+    elevation: 8
   },
 
   VAppBar: {
@@ -75,5 +75,26 @@ export default {
     border: 'start',
     borderColor: 'purple-accent-4',
     elevation: true
+  },
+
+  ProductCard: {
+    ripple: false,
+    class: 'card',
+    link: true,
+    elevation: 8
+  },
+
+  ProductCardActions: {
+    color: 'indigo',
+    size: 'x-small',
+    variant: 'elevated'
+  },
+
+  ProductCardRating: {
+    class: 'gap-3',
+    color: 'yellow-darken-3',
+    disabled: true,
+    length: '5',
+    size: '10'
   }
 }
