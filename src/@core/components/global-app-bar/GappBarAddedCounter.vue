@@ -1,8 +1,8 @@
 <template>
   <VBtn color="secondary" icon size="small">
-    <VBadge :content="addedProductsCounter" color="primary">
+    <CounterBadge :content="addedProductsCounter" color="primary">
       <VIcon icon="$mdiStoreOutline" />
-    </VBadge>
+    </CounterBadge>
   </VBtn>
 </template>
 
