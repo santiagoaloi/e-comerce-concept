@@ -42,4 +42,13 @@
     just by copying and pasting the list of class names.
     Can only apply tailwind classes.
     */
+
+  /* VImg */
+  .img-loader-spinner {
+    @apply flex h-full items-center justify-center;
+  }
+
+  .active-push-down {
+    @apply cursor-pointer shadow-md duration-500 active:translate-y-[1.2px] active:shadow-sm active:duration-500;
+  }
 }
