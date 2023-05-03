@@ -2,7 +2,7 @@
   <VContainer>
     <div class="product-cards-container">
       <ProductCard
-        v-for="product in store.products"
+        v-for="product in productStore.products"
         :key="product.title"
         :avatar="product.avatar"
         :cart="product._cart"
@@ -23,10 +23,11 @@
 </template>
 
 <script setup>
-const store = useProductStore()
+const productStore = useProductStore()
 
 onBeforeMount(() => {
-  store.simulateProductsGet()
+  productStore.getProducts()
+  productStore.simulateProductsGet()
 })
 
 function addProduct(product) {
