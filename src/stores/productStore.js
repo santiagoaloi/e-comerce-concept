@@ -63,14 +63,10 @@ export const useProductStore = defineStore('global-products', {
       this.products = mergedProducts
     },
 
-    getProducts() {
+    async getProducts() {
       try {
-        return axios
-          .post('/publicProduct.getAll')
-          .then((result) => {
-            this.productsApi = result.data.result
-          })
-          .catch((e) => console.log(e))
+        const result = await axios.post('/publicProduct.getAll')
+        this.productsApi = result.data.result
       } catch (e) {
         console.log(e)
       }
