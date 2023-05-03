@@ -1,6 +1,6 @@
 <template>
   <VContainer>
-    <div class="product-cards-container">
+    <div class="product-cards-grid">
       <ProductCard
         v-for="product in store.products"
         :key="product.title"
@@ -51,7 +51,7 @@ function favorite(product) {
 </script>
 
 <style scoped>
-.product-cards-container {
+.product-cards-grid {
   @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3
 }
 </style>
