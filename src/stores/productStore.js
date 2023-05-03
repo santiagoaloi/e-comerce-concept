@@ -2,7 +2,8 @@ import { mochilas, zapatos } from '@/data'
 
 export const useProductStore = defineStore('global-products', {
   state: () => ({
-    products: []
+    products: [],
+    productsApi: []
   }),
 
   persist: true,
@@ -57,6 +58,19 @@ export const useProductStore = defineStore('global-products', {
       })
 
       this.products = mergedProducts
+    },
+
+    getProducts() {
+      try {
+        return axios
+          .post('/publicProduct.getAll')
+          .then((result) => {
+            this.productsApi = result.data.result
+          })
+          .catch((e) => console.log(e))
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 })
