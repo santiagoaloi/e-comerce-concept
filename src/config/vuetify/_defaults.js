@@ -14,7 +14,7 @@ export default {
   },
 
   VCard: {
-    flat: false,
+    border: true,
     elevation: 8
   },
 
@@ -81,13 +81,15 @@ export default {
     ripple: false,
     class: 'card',
     link: true,
-    elevation: 8
+    elevation: 8,
+    border: true
   },
 
   ProductCardActions: {
-    color: 'indigo',
+    color: 'accent-button',
     size: 'x-small',
-    variant: 'elevated'
+    variant: 'elevated',
+    ripple: false
   },
 
   ProductCardRating: {
