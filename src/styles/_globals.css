@@ -10,6 +10,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.v-btn:active {
+.v-btn:active:not(.disable-animation) {
   transform: translateY(1.2px);
 }
