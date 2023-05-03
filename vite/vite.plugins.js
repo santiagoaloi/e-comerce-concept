@@ -1,5 +1,5 @@
 /*
- * Keeping inports separately to clean Vite config.
+ * Keeping imports separately to clean Vite config.
  * Any library usage should be prefixed with ``
  */
 import {
@@ -11,7 +11,7 @@ import {
   layouts,
   pages,
   unfonts
-} from './vite.plugin.inports.js'
+} from './vite.plugin.imports.js'
 
 export function createVitePlugins() {
   const vitePlugins = [
