@@ -7,10 +7,10 @@ https://www.npmjs.com/package/vue-nprogress
 }
 
 #nprogress .bar {
-  background: #5e8acd;
-  opacity: 1;
+  background: #575bc7;
+  opacity: 0.3;
   position: fixed;
-  z-index: 9999;
+  z-index: 1031;
   top: 0;
   left: 0;
   width: 100%;
