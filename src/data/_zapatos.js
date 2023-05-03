@@ -1,5 +1,6 @@
 export default [
   {
+    _id: 2,
     title: 'Botas Botitas Mujer Cuero Base Plataforma Confort Moda 750ne comfort',
     description:
       'Botas Plataforma Cuero Vacuno Mujer Cierre Metalico 751ne Metalico 751ne Metalico 751s',
@@ -10,6 +11,7 @@ export default [
     discountPrice: '19.490'
   },
   {
+    _id: 3,
     title: 'NIKE',
     description:
       'Zapatillas Nike Air Presto Prm 0566 Nike termodinamica con bolsa de aire y sensores de movimiento',
@@ -20,6 +22,7 @@ export default [
     discountPrice: '60.190'
   },
   {
+    _id: 4,
     title: 'NIKE',
     description:
       'Zapatillas Nike Air Presto Prm 0566 Nike termodinamica con bolsa de aire y sensores de movimiento',
