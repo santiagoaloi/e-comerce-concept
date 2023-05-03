@@ -5,7 +5,7 @@ export default {
       primary: '#0062f0',
       surface: '#293046',
       error: '#ff4081',
-      secondary: '#d0d2d6',
+      secondary: '#293046',
 
       background: '#151d32',
 
