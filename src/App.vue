@@ -10,6 +10,10 @@
 // 👉 currentTheme values are light / dark
 // 👉 toRefs is needed so reactivity continues in destructure.
 
+axios.defaults.baseURL = import.meta.env.VITE_BaseApiURL
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.withCredentials = true
+
 const { currentTheme } = toRefs(useAppStore())
 
 // 👉 Tweak to make sure the html tag background

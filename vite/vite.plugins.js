@@ -41,6 +41,9 @@ export function createVitePlugins() {
 
           // Vuetify
           vuetify: ['useDisplay', 'createVuetify', 'useTheme']
+        },
+        {
+          axios: [['default', 'axios']]
         }
       ],
       dirs: [
