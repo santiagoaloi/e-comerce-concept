@@ -5,25 +5,31 @@
     @mouseup="clicked = false"
   >
     <div class="card-wrapper">
-      <VImg :src="avatar" class="card-image" cover height="250">
+      <VImg class="card-image" cover height="250" src="https://placehold.co/600x400/png">
         <div class="card-top-elements">
           <VChip class="bg-primary">{{ discount }}% off</VChip>
 
           <VSpacer />
 
           <VChip
-            v-if="cart.added"
+            v-if="cartProduct?._cart.units"
             class="bg-primary"
             closable
-            @click:close="$emit('clearUnits')"
+            @click:close="$emit('clear')"
             @mousedown.stop
-            >{{ cart.added }}</VChip
-          >
-
+            >{{ cartProduct?._cart.units }}
+          </VChip>
+          <!-- 
           <div @mousedown.stop="$emit('favorite')">
-            <VBtn v-if="cart.favorite" color="red" icon="$mdiHeart" size="small" variant="plain" />
+            <VBtn
+              v-if="cartProduct?._cart?.favorite"
+              color="red"
+              icon="$mdiHeart"
+              size="small"
+              variant="plain"
+            />
             <VBtn v-else color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
-          </div>
+          </div> -->
         </div>
 
         <template #placeholder>
@@ -69,7 +75,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['favorite', 'add', 'remove', 'clearUnits'])
+const emit = defineEmits(['favorite', 'add', 'remove', 'clear'])
 
 defineProps({
   title: {
@@ -104,13 +110,15 @@ defineProps({
     type: Boolean,
     default: false
   },
-  cart: {
+  cartProduct: {
     type: Object,
     default: () => {}
+  },
+  hasUnits: {
+    type: Boolean,
+    default: false
   }
 })
-
-const clicked = ref(false)
 
 const buttonActions = [
   { action: () => emit('remove'), icon: '$mdiMinus' },
