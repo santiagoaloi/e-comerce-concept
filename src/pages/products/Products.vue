@@ -5,9 +5,14 @@
         <ProductCard
           v-for="product in products?.data"
           :key="product.id"
+          :cart-product="findCartProduct(product)"
           :price="product.price_base"
           :rating="2"
           :title="product.name"
+          @add="increaseCartUnit(product)"
+          @clear="removeProductFromCart(product.id)"
+          @favorite="favoriteCartUnit(product)"
+          @remove="decreaseCartUnit(product)"
         />
       </div>
     </VCard>
@@ -25,31 +30,24 @@
 </template>
 
 <script setup>
-import NProgress from 'nprogress'
-
-const page = ref(1)
-const products = ref()
-const loading = ref(false)
+import { makeStoreDestructurable } from 'pinia-make-destructurable'
+const {
+  loading,
+  page,
+  products,
+  favoriteCartUnit,
+  switchPaginationPage,
+  increaseCartUnit,
+  decreaseCartUnit,
+  removeProductFromCart,
+  findCartProduct
+} = makeStoreDestructurable(useProductStore())
 
 // Listen to the page value and call the backend
 // requesting a specific paginated page.
 watchEffect(async () => {
   switchPaginationPage(page.value)
 })
-
-async function switchPaginationPage(page) {
-  try {
-    NProgress.start()
-    loading.value = true
-    const result = await axios.post(`/publicProduct.getAll?page=${page}`)
-    products.value = result.data.result
-  } catch (e) {
-    console.log(e)
-  } finally {
-    loading.value = false
-    NProgress.done()
-  }
-}
 </script>
 
 <style scoped>
