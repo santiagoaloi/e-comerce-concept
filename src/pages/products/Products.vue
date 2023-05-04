@@ -1,57 +1,51 @@
 <template>
-  <VContainer>
-    <div class="product-cards-grid">
-      <ProductCard
-        v-for="product in productStore.products"
-        :key="product.title"
-        :avatar="product.avatar"
-        :cart="product._cart"
-        :description="product.description"
-        :discount="product.discount"
-        :discount-price="product.discountPrice"
-        :favorite="product.favorite"
-        :price="product.price"
-        :rating="product.rating"
-        :title="product.title"
-        @add="addProduct(product)"
-        @clear-units="clearUnits(product)"
-        @favorite="favorite(product)"
-        @remove="removeProduct(product)"
+  <div class="container">
+    <VCard :disabled="loading" class="overflow-auto h-full bg-transparent p-5" elevation="0" flat>
+      <div class="product-cards-grid">
+        <ProductCard
+          v-for="product in products?.data"
+          :key="product.id"
+          :price="product.price_base"
+          :rating="2"
+          :title="product.name"
+        />
+      </div>
+    </VCard>
+    <VCard class="d-flex flex-col justify-center">
+      <VPagination
+        v-model="page"
+        :length="15"
+        :total-visible="4"
+        active-color="primary"
+        density="comfortable"
+        variant="tonal"
       />
-    </div>
-  </VContainer>
+    </VCard>
+  </div>
 </template>
 
 <script setup>
-const productStore = useProductStore()
+const page = ref(1)
+const products = ref()
 
-onBeforeMount(() => {
-  productStore.getProducts()
-  productStore.simulateProductsGet()
+const initialUrl = '/publicProduct.getAll'
+
+const loading = ref(false)
+
+watchEffect(async () => {
+  try {
+    const result = await axios.post(products.value?.links[page.value].url || initialUrl)
+    products.value = result.data.result
+  } catch (e) {
+    console.log(e)
+  }
 })
-
-function addProduct(product) {
-  if (product._cart.added === 100) return
-
-  product._cart.added += 1
-}
-
-function removeProduct(product) {
-  if (!product._cart.added) return
-  product._cart.added -= 1
-}
-
-function clearUnits(product) {
-  if (!product._cart.added) return
-  product._cart.added = 0
-}
-
-function favorite(product) {
-  product._cart.favorite = !product._cart.favorite
-}
 </script>
 
 <style scoped>
+.container {
+  @apply flex h-full flex-col mx-auto 
+}
 .product-cards-grid {
   @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3
 }
