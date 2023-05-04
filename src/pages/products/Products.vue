@@ -14,7 +14,7 @@
     <VCard class="d-flex flex-col justify-center">
       <VPagination
         v-model="page"
-        :length="15"
+        :length="products?.last_page || 1"
         :total-visible="4"
         active-color="primary"
         density="comfortable"
@@ -25,21 +25,31 @@
 </template>
 
 <script setup>
+import NProgress from 'nprogress'
+
 const page = ref(1)
 const products = ref()
-
-const initialUrl = '/publicProduct.getAll'
-
 const loading = ref(false)
 
+// Listen to the page value and call the backend
+// requesting a specific paginated page.
 watchEffect(async () => {
+  switchPaginationPage(page.value)
+})
+
+async function switchPaginationPage(page) {
   try {
-    const result = await axios.post(products.value?.links[page.value].url || initialUrl)
+    NProgress.start()
+    loading.value = true
+    const result = await axios.post(`/publicProduct.getAll?page=${page}`)
     products.value = result.data.result
   } catch (e) {
     console.log(e)
+  } finally {
+    loading.value = false
+    NProgress.done()
   }
-})
+}
 </script>
 
 <style scoped>
