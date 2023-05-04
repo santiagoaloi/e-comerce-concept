@@ -5,24 +5,19 @@
     @mouseup="clicked = false"
   >
     <div class="card-wrapper">
-      <VImg :src="avatar" class="card-image" cover height="250">
+      <VImg class="card-image" cover height="250" src="https://placehold.co/600x400/png">
         <div class="card-top-elements">
           <VChip class="bg-primary">{{ discount }}% off</VChip>
 
           <VSpacer />
 
-          <VChip
-            v-if="cart.added"
-            class="bg-primary"
-            closable
-            @click:close="$emit('clearUnits')"
-            @mousedown.stop
-            >{{ cart.added }}</VChip
+          <VChip class="bg-primary" closable @click:close="$emit('clearUnits')" @mousedown.stop
+            >0</VChip
           >
 
           <div @mousedown.stop="$emit('favorite')">
-            <VBtn v-if="cart.favorite" color="red" icon="$mdiHeart" size="small" variant="plain" />
-            <VBtn v-else color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
+            <!-- <VBtn v-if="cart.favorite" color="red" icon="$mdiHeart" size="small" variant="plain" /> -->
+            <VBtn color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
           </div>
         </div>
 
