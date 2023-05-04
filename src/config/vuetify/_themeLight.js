@@ -22,7 +22,7 @@ export default {
       'text-field-background': '#fff'
     },
     variables: {
-      'border-opacity': 0.8,
+      // 'border-opacity': 0.8,
       'border-color': '#eff1f5',
 
       'shadow-key-umbra-opacity': 'rgba(var(--v-theme-on-surface), 0.01)',
