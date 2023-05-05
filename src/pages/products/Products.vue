@@ -11,7 +11,7 @@
         <ProductCard
           v-for="product in products?.data"
           :key="product.id"
-          :cart-product="productExists(product)"
+          :cart-product="productExists(product.id)"
           :price="product.price_base"
           :rating="2"
           :title="product.name"
