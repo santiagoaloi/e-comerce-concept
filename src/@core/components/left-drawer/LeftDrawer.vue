@@ -1,6 +1,6 @@
 <template>
   <VNavigationDrawer
-    :rail="rail"
+    :rail="mainDrawerRail"
     color="drawer"
     elevation="7"
     expand-on-hover
@@ -21,11 +21,11 @@
 
         <div>
           <VIcon
-            :icon="rail ? '$radioOff' : '$radioOn'"
+            :icon="mainDrawerRail ? '$radioOff' : '$radioOn'"
             class="mt-n1 cursor-pointer"
             color="primary"
             size="small"
-            @click="rail = !rail"
+            @click="mainDrawerRail = !mainDrawerRail"
           />
         </div>
       </div>
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-const rail = ref(false)
+const { mainDrawerRail } = toRefs(useAppStore())
 
 const menu = [{ title: 'Products', to: '/products', icon: '$mdiShoeSneaker' }]
 </script>
