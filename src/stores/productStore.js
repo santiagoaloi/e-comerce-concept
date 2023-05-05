@@ -2,25 +2,31 @@ import NProgress from 'nprogress'
 
 export const useProductStore = defineStore('global-products', {
   state: () => ({
-    selectedProducts: [],
-    products: [],
     cart: [],
+    products: [],
     favorites: [],
-    page: 1,
     loading: false
   }),
 
   persist: true,
 
-  getters: {},
+  getters: {
+    cartUnitsAdded() {
+      return this.cart.reduce((arg, prod) => (arg += prod._cart.units), 0)
+    },
+
+    routeQueryPage() {
+      return Number(this.router.currentRoute.value.query.page) || 1
+    }
+  },
 
   actions: {
-    findCartProduct(product) {
-      return this.cart.find((cartProduct) => cartProduct.id === product.id)
+    productExists(id) {
+      return this.cart.find((cartProduct) => cartProduct.id === id)
     },
 
     favoriteCartUnit(product) {
-      const productExists = this.cart.find((cartProduct) => cartProduct.id === product.id)
+      const productExists = this.productExists(product.id)
       // const favoriteExists = this.favorites.find((favoriteProduct) => cartProduct.id === product.id)
 
       if (productExists) {
@@ -36,7 +42,7 @@ export const useProductStore = defineStore('global-products', {
     },
 
     decreaseCartUnit(product) {
-      const productExists = this.cart.find((cartProduct) => cartProduct.id === product.id)
+      const productExists = this.productExists(product.id)
 
       if (productExists && productExists._cart.units > 1) {
         productExists._cart.units -= 1
@@ -47,7 +53,7 @@ export const useProductStore = defineStore('global-products', {
     },
 
     increaseCartUnit(product) {
-      const productExists = this.cart.find((cartProduct) => cartProduct.id === product.id)
+      const productExists = this.productExists(product.id)
 
       if (!productExists) {
         product._cart.units += 1
@@ -64,6 +70,9 @@ export const useProductStore = defineStore('global-products', {
         this.loading = true
 
         const result = await axios.post(`/publicProduct.getAll?page=${page}`)
+
+        this.router.push({ path: '/products', query: { page } })
+
         const paginatedProducts = result.data.result
 
         paginatedProducts.data = paginatedProducts.data.map((product) => {
