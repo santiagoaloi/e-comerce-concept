@@ -1,11 +1,17 @@
 <template>
-  <div class="container">
-    <VCard :disabled="loading" class="overflow-auto h-full bg-transparent p-5" elevation="0" flat>
+  <div class="top-container">
+    <VCard
+      :disabled="loading"
+      border="0"
+      class="overflow-auto h-full bg-transparent p-5 no-scrollbar"
+      elevation="0"
+      flat
+    >
       <div class="product-cards-grid">
         <ProductCard
           v-for="product in products?.data"
           :key="product.id"
-          :cart-product="findCartProduct(product)"
+          :cart-product="productExists(product)"
           :price="product.price_base"
           :rating="2"
           :title="product.name"
@@ -16,9 +22,9 @@
         />
       </div>
     </VCard>
-    <VCard class="d-flex flex-col justify-center">
+    <VCard border="t" class="d-flex flex-col justify-center bg-transparent">
       <VPagination
-        v-model="page"
+        v-model="currentPage"
         :length="products?.last_page || 1"
         :total-visible="4"
         active-color="primary"
@@ -33,25 +39,28 @@
 import { makeStoreDestructurable } from 'pinia-make-destructurable'
 const {
   loading,
-  page,
   products,
   favoriteCartUnit,
   switchPaginationPage,
   increaseCartUnit,
   decreaseCartUnit,
   removeProductFromCart,
-  findCartProduct
+  productExists,
+  routeQueryPage
 } = makeStoreDestructurable(useProductStore())
 
 // Listen to the page value and call the backend
 // requesting a specific paginated page.
+
+const currentPage = ref(routeQueryPage.value)
+
 watchEffect(async () => {
-  switchPaginationPage(page.value)
+  switchPaginationPage(currentPage.value)
 })
 </script>
 
 <style scoped>
-.container {
+.top-container {
   @apply flex h-full flex-col mx-auto 
 }
 .product-cards-grid {
