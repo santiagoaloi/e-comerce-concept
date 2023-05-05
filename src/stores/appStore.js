@@ -5,6 +5,7 @@
 export const useAppStore = defineStore('global-application', {
   state: () => ({
     currentTheme: 'light',
+    mainDrawerRail: false,
     globalSnackbar: {
       model: false,
       text: '',
@@ -14,7 +15,7 @@ export const useAppStore = defineStore('global-application', {
 
   persist: {
     //Persist only currentTheme
-    paths: ['currentTheme']
+    paths: ['currentTheme', 'mainDrawerRail']
   },
 
   getters: {
