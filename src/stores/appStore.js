@@ -5,7 +5,7 @@
 export const useAppStore = defineStore('global-application', {
   state: () => ({
     currentTheme: 'light',
-    mainDrawerRail: false,
+    mainDrawerRail: true,
     globalSnackbar: {
       model: false,
       text: '',
