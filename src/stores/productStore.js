@@ -71,7 +71,7 @@ export const useProductStore = defineStore('global-products', {
 
         const result = await axios.post(`/publicProduct.getAll?page=${page}`)
 
-        this.router.push({ path: '/products', query: { page } })
+        this.router.push({ path: '/', query: { page } })
 
         const paginatedProducts = result.data.result
 
