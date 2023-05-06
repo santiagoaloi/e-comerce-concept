@@ -29,7 +29,7 @@
           />
         </div>
       </div>
-
+      <!-- 
       <VListItem
         v-for="item in menu"
         :key="item.title"
@@ -38,7 +38,7 @@
         :title="item.title"
         :to="item.to"
         active-color="primary"
-      />
+      /> -->
     </VList>
   </VNavigationDrawer>
 </template>
