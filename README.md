@@ -44,7 +44,7 @@
 ```bash
 
 # clone
-git clone https://github.com/santiagoaloi/yup_validation_concept.git
+git clone https://github.com/santiagoaloi/e-comerce-concept.git
 
 # enter the project directory
 cd simplesign-refactor
