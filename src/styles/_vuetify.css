@@ -41,11 +41,11 @@ html,
 .v-item-group {
   transition-duration: 0ms !important;
 }
-/* 
+
 .v-btn {
   transition-property: transform;
   transition-duration: 0.2s;
-} */
+}
 
 .v-input__details {
   position: absolute;
