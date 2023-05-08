@@ -1,6 +1,6 @@
 export default {
   //Product cards
-  ProductCard: {
+  ProductCardWrapper: {
     ripple: false,
     class: 'card',
     link: true,

@@ -6,6 +6,6 @@ import { VBadge } from 'vuetify/components/VBadge'
 export default {
   ProductCardActions: VBtn,
   ProductCardRating: VRating,
-  ProductCard: VCard,
+  ProductCardWrapper: VCard,
   CounterBadge: VBadge
 }
