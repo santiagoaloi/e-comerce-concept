@@ -1,4 +1,5 @@
 import { createVuetify } from 'vuetify'
+import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 
 // Default configurations
 import {
@@ -18,6 +19,10 @@ import { aliases as iconAliases, mdi as mdiSvg } from 'vuetify/iconsets/mdi-svg'
 
 export const install = (app) => {
   const vuetify = createVuetify({
+    components: {
+      VSkeletonLoader
+    },
+
     theme,
     icons: {
       defaultSet: 'mdiSvg',
