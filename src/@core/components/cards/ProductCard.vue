@@ -1,6 +1,6 @@
 <template>
   <ProductCardWrapper
-    :class="{ 'active-push-down': clicked }"
+    :class="{ 'active-push-down elevation-3': clicked }"
     @mousedown="clicked = true"
     @mouseup="clicked = false"
   >
@@ -11,14 +11,19 @@
 
           <VSpacer />
 
-          <VChip
-            v-if="cartProduct?._cart.units"
-            class="bg-primary"
-            closable
-            @click:close="$emit('clear')"
-            @mousedown.stop
-            >{{ cartProduct?._cart.units }}
-          </VChip>
+          <VFadeTransition>
+            <VChip
+              v-if="cartProduct?._cart.units"
+              closable
+              color="primary"
+              @click:close="$emit('clear')"
+              @mousedown.stop
+            >
+              <b>{{ cartProduct?._cart.units }}</b>
+              <VIcon class="ml-2" icon="$mdiCartOutline" />
+            </VChip>
+          </VFadeTransition>
+
           <!-- 
           <div @mousedown.stop="$emit('favorite')">
             <VBtn
@@ -120,6 +125,8 @@ defineProps({
   }
 })
 
+const clicked = ref(false)
+
 const buttonActions = [
   { action: () => emit('remove'), icon: '$mdiMinus' },
   { action: () => emit('add'), icon: '$mdiPlus' }
@@ -177,5 +184,9 @@ const buttonActions = [
 
 .card-footer {
   @apply flex items-center gap-1
+}
+
+.active-push-down {
+  @apply cursor-pointer shadow-md duration-500 active:translate-y-[1.2px] active:shadow-sm active:duration-500
 }
 </style>
