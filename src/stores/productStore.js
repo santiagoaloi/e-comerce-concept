@@ -5,22 +5,39 @@ export const useProductStore = defineStore('global-products', {
     cart: [],
     products: [],
     favorites: [],
-    loading: false
+    isLoading: false
   }),
 
-  persist: true,
+  persist: {
+    paths: ['cart']
+  },
 
   getters: {
     cartUnitsAdded() {
+      /**  sums up all units in `products._cart.units` in all cart product objects. */
       return this.cart.reduce((arg, prod) => (arg += prod._cart.units), 0)
     },
 
     routeQueryPage() {
+      /** If the url has no page value, the 1st page is requested. */
       return Number(this.router.currentRoute.value.query.page) || 1
     }
   },
 
   actions: {
+    setLoading() {
+      return {
+        start: () => {
+          this.isLoading = true
+          NProgress.start()
+        },
+        done: () => {
+          this.isLoading = false
+          NProgress.done()
+        }
+      }
+    },
+
     productExists(id) {
       return this.cart.find((cartProduct) => cartProduct.id === id)
     },
@@ -64,28 +81,39 @@ export const useProductStore = defineStore('global-products', {
       productExists._cart.units += 1
     },
 
+    getProducts(page) {
+      return request({
+        url: `/publicProduct.getAll?page=${page}`,
+        method: 'post'
+      })
+    },
+
     async switchPaginationPage(page) {
       try {
-        NProgress.start()
-        this.loading = true
+        /**  Trigger spinners and loading state. */
+        this.setLoading().start()
 
-        const result = await axios.post(`/publicProduct.getAll?page=${page}`)
+        /**  Get the pagintaed products from backend. */
+        const products = await this.getProducts(page)
 
+        /** becomes http://localhost:8001/?page=x */
         this.router.push({ path: '/', query: { page } })
 
-        const paginatedProducts = result.data.result
+        const paginatedProducts = products.data.result
 
+        /**  We add the _cart object to every product */
         paginatedProducts.data = paginatedProducts.data.map((product) => {
           return { ...product, _cart: { units: 0, favorite: false } }
         })
 
+        /**  Assign prodocts to state. */
         this.products = paginatedProducts
       } catch (e) {
-        this.loading = false
-        console.log(e)
+        /**  Switch off spinners and loading state. */
+        this.setLoading().done()
       } finally {
-        this.loading = false
-        NProgress.done()
+        /**  Switch off spinners and loading state. */
+        this.setLoading().done()
       }
     }
   }
