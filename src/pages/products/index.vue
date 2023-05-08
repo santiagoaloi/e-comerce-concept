@@ -1,6 +1,6 @@
 <template>
   <div class="top-container">
-    <VCard :disabled="isLoading" border="0" class="top-card" elevation="0" flat>
+    <VCard :disabled="isLoading" border="0" class="top-card no-scrollbar" elevation="0" flat>
       <div class="product-cards-grid">
         <ProductCard
           v-for="product in products?.data"
@@ -59,7 +59,7 @@ watchEffect(async () => {
   @apply flex h-full flex-col mx-auto 
 }
 .top-card {
-  @apply overflow-auto h-full bg-transparent p-5 no-scrollbar
+  @apply overflow-auto h-full bg-transparent p-5 
 }
 .product-cards-grid {
   @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3

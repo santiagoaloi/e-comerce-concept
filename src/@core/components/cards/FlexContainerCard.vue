@@ -6,7 +6,7 @@
           <div class="header-wrapper">
             <slot name="header" />
           </div>
-          <div class="content-wrapper">
+          <div class="content-wrapper no-scrollbar">
             <slot name="default" />
           </div>
         </div>
@@ -37,6 +37,6 @@
 }
 
 .content-wrapper {
-  @apply no-scrollbar flex flex-col overflow-auto
+  @apply  flex flex-col overflow-auto
 }
 </style>
