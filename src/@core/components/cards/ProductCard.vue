@@ -1,5 +1,5 @@
 <template>
-  <ProductCard
+  <ProductCardWrapper
     :class="{ 'active-push-down': clicked }"
     @mousedown="clicked = true"
     @mouseup="clicked = false"
@@ -71,7 +71,7 @@
         />
       </div>
     </div>
-  </ProductCard>
+  </ProductCardWrapper>
 </template>
 
 <script setup>
