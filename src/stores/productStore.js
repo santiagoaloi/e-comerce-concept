@@ -62,32 +62,33 @@ export const useProductStore = defineStore('global-products', {
      * Removes the product with the specified ID from the cart.
      * @param {number} id - The ID of the product to remove.
      */
-    removeProductFromCart(id) {
+    removeProductFromCart(product) {
+      // Reset product cart units
+      product._cart.units = 0
+
       // Remove the product with the specified ID from the cart
-      this.cart = this.cart.filter((product) => {
-        return product.id !== id
+      this.cart = this.cart.filter((cartProduct) => {
+        return cartProduct.id !== product.id
       })
     },
 
     /**
-     * Decreases the number of units for the specified product in the cart.
-     * If the product exists in the cart and has more than 1 unit, its unit count is decreased by 1.
-     * If the product exists in the cart and has only 1 unit, it is removed from the cart.
-     * If the product does not exist in the cart, nothing happens.
-     * @param {object} product - The product to decrease the unit count for.
+     * Decreases the number of units of a product in the shopping cart by 1.
+     * @param {Object} product - The product object to decrease units for.
      */
     decreaseCartUnit(product) {
+      // Check if the product already exists in the cart.
       const productExists = this.productExists(product.id)
 
+      // If the product exists and has more than one unit, decrease the number of units by 1 and return.
       if (productExists && productExists._cart.units > 1) {
-        // Decrease the unit count of the existing product in the cart
         productExists._cart.units -= 1
         return
       }
 
-      if (productExists) {
-        // Remove the product from the cart if it has only 1 unit
-        this.removeProductFromCart(productExists.id)
+      // If the product exists but has only one unit, remove it from the cart.
+      if (productExists && productExists._cart.units === 1) {
+        this.removeProductFromCart(productExists)
       }
     },
 
