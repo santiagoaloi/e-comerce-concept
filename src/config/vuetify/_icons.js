@@ -11,5 +11,6 @@ export {
   mdiMinus,
   mdiHeartOutline,
   mdiHeart,
-  mdiStoreOutline
+  mdiStoreOutline,
+  mdiCartOutline
 } from '@mdi/js'
