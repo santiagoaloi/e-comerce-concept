@@ -2,18 +2,22 @@
   <div class="top-container">
     <VCard :disabled="isLoading" border="0" class="top-card no-scrollbar" elevation="0" flat>
       <div class="product-cards-grid">
-        <ProductCard
-          v-for="product in products?.data"
-          :key="product.id"
-          :cart-product="productExists(product.id)"
-          :price="product.price_base"
-          :rating="2"
-          :title="product.name"
-          @add="increaseCartUnit(product)"
-          @clear="removeProductFromCart(product.id)"
-          @favorite="favoriteCartUnit(product)"
-          @remove="decreaseCartUnit(product)"
-        />
+        <template v-for="product in products?.data" :key="product.id" :key="product.id">
+          <ProductCard
+            v-if="!isLoading"
+            :cart-product="productExists(product.id)"
+            :price="product.price_base"
+            :rating="2"
+            :title="product.name"
+            @add="increaseCartUnit(product)"
+            @clear="removeProductFromCart(product.id)"
+            @favorite="favoriteCartUnit(product)"
+            @remove="decreaseCartUnit(product)"
+          />
+        </template>
+        <template v-for="(skeleton, i) in 6" :key="i">
+          <ProductCardSkeleton v-if="isLoading" />
+        </template>
       </div>
     </VCard>
     <VCard border="t" class="d-flex flex-col justify-center bg-transparent">
