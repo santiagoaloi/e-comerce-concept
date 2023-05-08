@@ -2,7 +2,7 @@
   <div class="top-container">
     <VCard :disabled="isLoading" border="0" class="top-card no-scrollbar" elevation="0" flat>
       <div class="product-cards-grid">
-        <template v-for="product in products?.data" :key="product.id" :key="product.id">
+        <template v-for="product in products?.data" :key="product.id">
           <ProductCard
             v-if="!isLoading"
             :cart-product="productExists(product.id)"
