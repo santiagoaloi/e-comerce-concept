@@ -10,7 +10,7 @@
             :rating="2"
             :title="product.name"
             @add="increaseCartUnit(product)"
-            @clear="removeProductFromCart(product.id)"
+            @clear="removeProductFromCart(product)"
             @favorite="favoriteCartUnit(product)"
             @remove="decreaseCartUnit(product)"
           />
@@ -20,7 +20,7 @@
         </template>
       </div>
     </VCard>
-    <VCard border="t" class="d-flex flex-col justify-center bg-transparent">
+    <VCard border="t" class="pagination-wrapper rounded-0">
       <VPagination
         v-model="currentPage"
         :length="products?.last_page || 1"
@@ -67,5 +67,8 @@ watchEffect(async () => {
 }
 .product-cards-grid {
   @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3
+}
+.pagination-wrapper {
+  @apply flex flex-col items-center bg-transparent p-2 
 }
 </style>
