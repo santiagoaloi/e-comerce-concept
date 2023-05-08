@@ -27,6 +27,7 @@
     "vuetify": "^3.2.1"
   },
   "devDependencies": {
+    "lodash-es": "^4.17.21",
     "@mdi/js": "6.2.95",
     "@rushstack/eslint-patch": "^1.2.0",
     "@vitejs/plugin-vue": "^3.1.0",
@@ -35,7 +36,6 @@
     "eslint": "^8.38.0",
     "eslint-plugin-tailwindcss": "^3.11.0",
     "eslint-plugin-vue": "^9.9.0",
-    "lodash.clonedeep": "^4.5.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
