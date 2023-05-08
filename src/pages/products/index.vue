@@ -1,6 +1,6 @@
 <template>
   <div class="top-container">
-    <VCard :disabled="loading" border="0" class="top-card" elevation="0" flat>
+    <VCard :disabled="isLoading" border="0" class="top-card" elevation="0" flat>
       <div class="product-cards-grid">
         <ProductCard
           v-for="product in products?.data"
@@ -32,7 +32,7 @@
 <script setup>
 import { makeStoreDestructurable } from 'pinia-make-destructurable'
 const {
-  loading,
+  isLoading,
   products,
   favoriteCartUnit,
   switchPaginationPage,
@@ -43,10 +43,11 @@ const {
   routeQueryPage
 } = makeStoreDestructurable(useProductStore())
 
-// Listen to the page value and call the backend
-// requesting a specific paginated page.
-
+/**  The default value of currentPage comes from the url. */
 const currentPage = ref(routeQueryPage.value)
+
+/**  Listen to the currentPage value and call the backend */
+/** requesting a specific paginated page. */
 
 watchEffect(async () => {
   switchPaginationPage(currentPage.value)
