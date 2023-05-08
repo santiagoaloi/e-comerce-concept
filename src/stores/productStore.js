@@ -134,11 +134,11 @@ export const useProductStore = defineStore('global-products', {
         //Trigger spinners and loading state.
         this.setLoading().start()
 
-        // Update the URL to reflect the new page number
-        this.router.push({ path: '/', query: { page } })
-
         // Fetch the paginated products from the backend
         const products = await this.getProducts(page)
+
+        // Update the URL to reflect the new page number
+        this.router.push({ path: '/', query: { page } })
 
         // Simplify the path to the paginated products
         const paginatedProducts = products.data.result
