@@ -9,6 +9,8 @@ export const useProductStore = defineStore('global-products', {
   }),
 
   persist: {
+    /** An array of state property names that will be persisted on 
+    page refresh or when the user navigates to a different page. */
     paths: ['cart']
   },
 
