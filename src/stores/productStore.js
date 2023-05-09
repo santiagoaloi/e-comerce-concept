@@ -5,13 +5,14 @@ export const useProductStore = defineStore('global-products', {
     cart: [],
     products: [],
     favorites: [],
-    isLoading: false
+    isLoading: false,
+    cartDrawer: false
   }),
 
   persist: {
     /** An array of state property names that will be persisted on 
     page refresh or when the user navigates to a different page. */
-    paths: ['cart']
+    paths: ['cart', 'cartDrawer']
   },
 
   getters: {
@@ -99,6 +100,9 @@ export const useProductStore = defineStore('global-products', {
      * @param {Object} product - The product to add or update in the cart.
      */
     increaseCartUnit(product) {
+      //Open the cart drawer when adding new units.
+      if (!this.cartDrawer) this.cartDrawer = true
+
       // Check if the product already exists in the cart
       const productExists = this.productExists(product.id)
 
