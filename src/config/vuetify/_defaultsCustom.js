@@ -28,6 +28,7 @@ export default {
     offsetX: -10,
     offsetY: -5,
     bordered: true,
-    color: 'primary'
+    color: 'primary',
+    max: 999
   }
 }
