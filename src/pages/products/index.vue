@@ -1,6 +1,6 @@
 <template>
   <div class="top-container">
-    <VCard :disabled="isLoading" border="0" class="top-card no-scrollbar" elevation="0" flat>
+    <VCard border="0" class="top-card no-scrollbar" elevation="0" flat>
       <div class="product-cards-grid">
         <template v-for="product in products?.data" :key="product.id">
           <ProductCard
@@ -9,6 +9,7 @@
             :price="product.price_base"
             :rating="2"
             :title="product.name"
+            v-motion-fade
             @add="increaseCartUnit(product)"
             @clear="removeProductFromCart(product)"
             @favorite="favoriteCartUnit(product)"
@@ -24,7 +25,7 @@
       <VPagination
         v-model="currentPage"
         :length="products?.last_page || 1"
-        :total-visible="4"
+        :total-visible="6"
         active-color="primary"
         density="comfortable"
         variant="tonal"
