@@ -12,5 +12,6 @@ export {
   mdiHeartOutline,
   mdiHeart,
   mdiStoreOutline,
-  mdiCartOutline
+  mdiCartOutline,
+  mdiTrashCanOutline
 } from '@mdi/js'
