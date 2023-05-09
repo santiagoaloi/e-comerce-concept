@@ -1,0 +1,9 @@
+<template>
+  <Lottie
+    :height="150"
+    :loop="false"
+    :width="200"
+    animation-link="/lottie/not_found.json"
+    speed="1"
+  />
+</template>
