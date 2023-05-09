@@ -40,7 +40,7 @@ export default {
       'field-outline': '#e4e1e1',
 
       'theme-navigation-drawer-overlay-multiplier': '1',
-      'background-image': `url('/bglight.svg')`
+      logo: 'url(/company_logos/neopos.png)'
     }
   }
 }

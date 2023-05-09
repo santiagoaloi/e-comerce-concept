@@ -56,7 +56,8 @@ export default {
 
       // Tab bg hover color not being highlighted.
       'theme-appbar-background-overlay-multiplier': '0.1',
-      'theme-on-text-field-background': '#adbac7'
+      'theme-on-text-field-background': '#adbac7',
+      logo: 'url(/company_logos/neopos.png)'
     }
   }
 }
