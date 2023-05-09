@@ -100,9 +100,6 @@ export const useProductStore = defineStore('global-products', {
      * @param {Object} product - The product to add or update in the cart.
      */
     increaseCartUnit(product) {
-      //Open the cart drawer when adding new units.
-      if (!this.cartDrawer) this.cartDrawer = true
-
       // Check if the product already exists in the cart
       const productExists = this.productExists(product.id)
 
@@ -114,7 +111,7 @@ export const useProductStore = defineStore('global-products', {
       }
 
       // If the product exists in the cart, increase its unit count by 1
-      productExists._cart.units += 1
+      if (productExists._cart.units < 999) productExists._cart.units += 1
     },
 
     /**
