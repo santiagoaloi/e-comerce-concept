@@ -2,11 +2,15 @@
   <div class="menu-wrapper">
     <GAppBarThemeSwitch />
     <!-- <GappBarFavoriteCounter /> -->
-    <GappBarAddedCounter />
+    <GappBarAddedCounter @click="cartDrawer = !cartDrawer" />
   </div>
 </template>
+
+<script setup>
+const { cartDrawer } = toRefs(useProductStore())
+</script>
 <style scoped>
 .menu-wrapper {
-  @apply flex items-center fixed right-0 mr-5 gap-4
+  @apply flex items-center fixed right-0 mr-10 gap-4
 }
 </style>
