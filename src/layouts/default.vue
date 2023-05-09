@@ -1,7 +1,7 @@
 <template>
   <div>
     <GSnackbar />
-    <LeftDrawer />
+    <CartDrawer />
     <GAppBar />
     <VMain scrollable>
       <RouterView v-slot="{ Component }">
