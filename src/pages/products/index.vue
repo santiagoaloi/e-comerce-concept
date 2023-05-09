@@ -34,7 +34,6 @@
 </template>
 
 <script setup>
-import { makeStoreDestructurable } from 'pinia-make-destructurable'
 const {
   isLoading,
   products,
