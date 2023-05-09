@@ -1,77 +1,90 @@
 <template>
   <VNavigationDrawer v-model="cartDrawer" color="drawer" width="360">
     <template #prepend>
-      <VList class="border-b bg-appbar-background" nav>
-        <div class="flex items-center py-2 px-2 justify-between">
+      <div class="d-flex align-center border-b py-2 mx-2">
+        <div class="flex items-center py-2 px-3 justify-between">
           <RouterLink to="/">
             <VImg class="logo" />
           </RouterLink>
         </div>
-      </VList>
-    </template>
-
-    <VCard
-      v-for="(product, i) in cart"
-      :key="i"
-      :class="{ 'active-push-down ': clicked }"
-      :ripple="false"
-      class="my-2 mx-3 px-2 border"
-      link
-      @mousedown="clicked = true"
-      @mouseup="clicked = false"
-    >
-      <div class="d-flex flex-no-wrap">
-        <VAvatar class="mx-2 mt-3" rounded="0" size="115">
-          <VImg src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></VImg>
-        </VAvatar>
-        <div class="d-flex flex-column gap-1">
-          <div class="mt-3">Martillo multicolor de madera dura press and tag and stick</div>
-          <small>Ellie Goulding</small>
-          <small class="text-green">$500</small>
+        <VSpacer />
+        <div>
+          <VBtn icon="$close" variant="text" @mousedown="cartDrawer = false"></VBtn>
         </div>
       </div>
-      <div class="d-flex justify-between py-1">
-        <VRow class="align-center pl-2">
-          <VCol cols="5">
-            <VTextField
-              v-model="product._cart.units"
-              bg-color="transparent"
-              class="unit-field"
-              @input="valueThreshold($event, product)"
-              @mousedown.stop
-            >
-              <template #prepend-inner>
-                <VIcon
-                  class="cursor-pointer"
-                  icon="$minus"
-                  @click.stop
-                  @mousedown.stop="decreaseCartUnit(product)"
-                ></VIcon>
-              </template>
+    </template>
 
-              <template #append-inner>
-                <VIcon
-                  class="cursor-pointer"
-                  icon="$mdiPlus"
-                  @click.stop
-                  @mousedown.stop="increaseCartUnit(product)"
-                />
-              </template>
-            </VTextField>
-          </VCol>
-          <VCol class="d-flex justify-end" cols="7">
-            <VBtn
-              class="mr-2"
-              color="transparent"
-              size="47"
-              @mousedown.stop="removeProductFromCart(product)"
-            >
-              <VIcon class="mt-n1" icon="$mdiTrashCanOutline" size="20" />
-            </VBtn>
-          </VCol>
-        </VRow>
+    <template v-for="(product, i) in cart" :key="i">
+      <VCard
+        v-if="cart.length"
+        :class="{ 'active-push-down': clicked }"
+        :ripple="false"
+        v-motion-pop
+        class="my-2 mx-3 px-2 border"
+        link
+        @mousedown="clicked = true"
+        @mouseup="clicked = false"
+      >
+        <div class="d-flex flex-no-wrap">
+          <VAvatar class="mx-2 mt-3" rounded="0" size="115">
+            <VImg src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></VImg>
+          </VAvatar>
+          <div class="d-flex flex-column gap-1">
+            <div class="mt-3">Martillo multicolor de madera dura press and tag and stick</div>
+            <small>Ellie Goulding</small>
+            <small class="text-green">$500</small>
+          </div>
+        </div>
+        <div class="d-flex justify-between py-1">
+          <VRow class="align-center pl-2">
+            <VCol cols="5">
+              <VTextField
+                v-model="product._cart.units"
+                bg-color="transparent"
+                class="unit-field"
+                type="number"
+                @input="valueThreshold($event, product)"
+                @mousedown.stop
+              >
+                <template #prepend-inner>
+                  <VIcon
+                    class="cursor-pointer"
+                    icon="$minus"
+                    @click.stop
+                    @mousedown.stop="decreaseCartUnit(product)"
+                  ></VIcon>
+                </template>
+
+                <template #append-inner>
+                  <VIcon
+                    class="cursor-pointer"
+                    icon="$mdiPlus"
+                    @click.stop
+                    @mousedown.stop="increaseCartUnit(product)"
+                  />
+                </template>
+              </VTextField>
+            </VCol>
+            <VCol class="d-flex justify-end" cols="7">
+              <VBtn
+                class="mr-2"
+                color="transparent"
+                size="47"
+                @mousedown.stop="removeProductFromCart(product)"
+              >
+                <VIcon class="mt-n1" icon="$mdiTrashCanOutline" size="20" />
+              </VBtn>
+            </VCol>
+          </VRow>
+        </div>
+      </VCard>
+    </template>
+    <VFadeTransition hide-on-leave>
+      <div v-if="!cart.length" class="d-flex flex-column fill-height align-center justify-center">
+        <EmptyCart />
+        <div>No hay productos en el carrito</div>
       </div>
-    </VCard>
+    </VFadeTransition>
 
     <template #append>
       <VList lines="three">
@@ -86,7 +99,7 @@
         </VListItem>
       </VList>
       <div class="mx-3 mb-3">
-        <VBtn block>Confirmar compra</VBtn>
+        <VBtn block>Confirmar Compra</VBtn>
       </div>
     </template>
   </VNavigationDrawer>
@@ -125,7 +138,7 @@ function valueThreshold(event, product) {
   background-size: contain;
 }
 
-.active-push-down {
-  @apply cursor-pointer shadow-md duration-500 active:translate-y-[1.2px] active:shadow-sm active:duration-500
-}
+  .active-push-down {
+    @apply cursor-pointer shadow-md duration-500 active:translate-y-[1.2px] active:shadow-sm active:duration-500;
+  }
 </style>
