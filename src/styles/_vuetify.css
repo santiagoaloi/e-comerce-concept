@@ -22,6 +22,18 @@ h6,
   color: rgba(var(--v-app-typography)) !important;
 }
 
+/* Hide the number input arrows */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
 html,
 #app .v-aplication {
   overflow-y: auto !important;
