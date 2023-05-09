@@ -3,7 +3,7 @@
     border="b"
     color="appbar-background"
     elevation="15"
-    height="62"
+    height="72"
     title="e-comerce concept"
   >
     <GAppBarMenuRight />
