@@ -4,37 +4,27 @@
     @mousedown="clicked = true"
     @mouseup="clicked = false"
   >
-    <div class="card-wrapper">
+    <div v-motion-fade class="card-wrapper">
       <VImg class="card-image" cover height="250" src="https://placehold.co/600x400/png">
         <div class="card-top-elements">
-          <VChip class="bg-primary">{{ discount }}% off</VChip>
-
+          <div>
+            <VChip class="bg-primary">{{ discount }}% off</VChip>
+          </div>
           <VSpacer />
-
-          <VFadeTransition>
-            <VChip
-              v-if="cartProduct?._cart.units"
-              closable
-              color="primary"
-              @click:close="$emit('clear')"
-              @mousedown.stop
-            >
-              <b>{{ cartProduct?._cart.units }}</b>
-              <VIcon class="ml-2" icon="$mdiCartOutline" />
-            </VChip>
-          </VFadeTransition>
-
-          <!-- 
-          <div @mousedown.stop="$emit('favorite')">
-            <VBtn
-              v-if="cartProduct?._cart?.favorite"
-              color="red"
-              icon="$mdiHeart"
-              size="small"
-              variant="plain"
-            />
-            <VBtn v-else color="red" icon="$mdiHeartOutline" size="small" variant="plain" />
-          </div> -->
+          <div>
+            <VFadeTransition>
+              <VChip
+                v-if="cartProduct?._cart.units"
+                :text="cartProduct?._cart.units"
+                append-icon="$mdiCartOutline"
+                class="bg-primary"
+                closable
+                @click:close="$emit('clear')"
+                @mousedown.stop
+              >
+              </VChip>
+            </VFadeTransition>
+          </div>
         </div>
 
         <template #placeholder>
@@ -63,17 +53,18 @@
       </div>
 
       <div class="card-footer">
-        <div class="card-price" v-html="`$${price}`" />
-        <div class="flex line-through" v-html="`$${discountPrice}`" />
+        <div class="card-price text-primary" v-html="`$${price}`" />
+        <!-- <div class="flex line-through" v-html="`$${discountPrice}`" /> -->
 
         <VSpacer />
 
         <ProductCardActions
           v-for="(button, i) in buttonActions"
           :key="i"
-          :icon="button.icon"
           @mousedown.stop="button.action"
-        />
+        >
+          <VIcon :icon="button.icon" />
+        </ProductCardActions>
       </div>
     </div>
   </ProductCardWrapper>
@@ -142,13 +133,14 @@ const buttonActions = [
   @apply flex h-full flex-col gap-4
 }
 
+.card-top-elements {
+  @apply flex opacity-90 items-center text-xl font-semibold 
+}
+
 .card-image {
   @apply rounded-lg p-3
 }
 
-.card-top-elements {
-  @apply flex opacity-90 items-center text-xl font-semibold
-}
 
 .card-title {
   display: -webkit-box;
@@ -175,7 +167,7 @@ const buttonActions = [
 }
 
 .card-price {
-  @apply text-green-500 flex
+  @apply  flex
 }
 
 .card-header {
