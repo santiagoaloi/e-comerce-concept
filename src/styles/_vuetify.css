@@ -77,6 +77,8 @@ html,
   border-width: 0 0 0px !important;
 }
 
-/* .v-btn--variant-text .v-btn__overlay {
-  background-color: unset !important;
-} */
+@media (min-width: 960px) {
+  .v-container {
+    max-width: 1200px !important;
+  }
+}
