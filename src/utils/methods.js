@@ -28,4 +28,9 @@ function capitalize(str) {
   return str[0].toUpperCase() + str.slice(1)
 }
 
-export { cloneDeep, isObject, capitalize, useDebouncedRef }
+// restrict a number between two other numbers.
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
+export { cloneDeep, isObject, capitalize, useDebouncedRef, clamp }
