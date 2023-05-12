@@ -49,13 +49,7 @@ export function createVitePlugins() {
           axios: [['default', 'axios']]
         }
       ],
-      dirs: [
-        'src/utils/**',
-
-        //Stores
-        'src/stores/**/**',
-        'src/pages/**/**/stores'
-      ],
+      dirs: ['src/utils/**', 'src/composables/**', 'src/stores/**/**', 'src/pages/**/**/stores'],
       vueTemplate: true,
       dts: true,
       eslintrc: {
