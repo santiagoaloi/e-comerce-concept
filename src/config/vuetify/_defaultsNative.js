@@ -10,7 +10,8 @@ export default {
 
   VBtn: {
     ripple: false,
-    color: 'primary-button'
+    color: 'primary-button',
+    class: 'rounded-md'
   },
 
   VCard: {
