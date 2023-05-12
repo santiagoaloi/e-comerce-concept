@@ -14,7 +14,6 @@ function createRequestFunction(service) {
         'X-Requested-With': 'XMLHttpRequest'
       },
       withCredentials: true,
-      timeout: 5000,
       baseURL: import.meta.env.VITE_BaseApiURL,
       data: {}
     }
