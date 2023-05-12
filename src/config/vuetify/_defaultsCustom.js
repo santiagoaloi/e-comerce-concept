@@ -10,7 +10,6 @@ export default {
 
   ProductCardActions: {
     color: 'accent-button',
-    size: 'x-small',
     variant: 'elevated',
     ripple: false
   },
