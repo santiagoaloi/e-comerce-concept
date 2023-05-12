@@ -1,15 +1,13 @@
 <template>
-  <VNavigationDrawer v-model="cartDrawer" color="drawer" width="360">
+  <VNavigationDrawer v-model="cartDrawer" color="drawer" elevation="10" width="360">
     <template #prepend>
-      <div class="d-flex align-center border-b py-2 mx-2">
-        <div class="flex items-center py-2 px-3 justify-between">
-          <RouterLink to="/">
-            <VImg class="logo" />
-          </RouterLink>
+      <div class="d-flex align-center border-b py-2">
+        <div class="flex items-center py-2 pl-4 justify-between">
+          <VImg class="logo" />
         </div>
         <VSpacer />
-        <div>
-          <VBtn icon="$close" variant="text" @mousedown="cartDrawer = false"></VBtn>
+        <div class="mr-4">
+          <VBtn icon="$close" size="small" variant="text" @mousedown="cartDrawer = false" />
         </div>
       </div>
     </template>
@@ -19,63 +17,44 @@
         v-if="cart.length"
         :class="{ 'active-push-down': clicked }"
         :ripple="false"
-        v-motion-pop
         class="my-2 mx-3 px-2 border"
         link
         @mousedown="clicked = true"
         @mouseup="clicked = false"
       >
-        <div class="d-flex flex-no-wrap">
-          <VAvatar class="mx-2 mt-3" rounded="0" size="115">
-            <VImg src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></VImg>
-          </VAvatar>
-          <div class="d-flex flex-column gap-1">
-            <div class="mt-3">Martillo multicolor de madera dura press and tag and stick</div>
-            <small>Ellie Goulding</small>
-            <small class="text-green">$500</small>
+        <div v-motion-pop>
+          <div class="d-flex flex-no-wrap">
+            <VAvatar class="mx-2 mt-3" rounded="0" size="115">
+              <VImg src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></VImg>
+            </VAvatar>
+            <div class="d-flex flex-column gap-1">
+              <div class="mt-3">Martillo multicolor de madera dura press and tag and stick</div>
+              <small>Ellie Goulding</small>
+              <small class="text-green">$500</small>
+            </div>
           </div>
-        </div>
-        <div class="d-flex justify-between py-1">
-          <VRow class="align-center pl-2">
-            <VCol cols="5">
-              <VTextField
-                v-model="product._cart.units"
-                bg-color="transparent"
-                class="unit-field"
-                type="number"
-                @input="valueThreshold($event, product)"
-                @mousedown.stop
-              >
-                <template #prepend-inner>
-                  <VIcon
-                    class="cursor-pointer"
-                    icon="$minus"
-                    @click.stop
-                    @mousedown.stop="decreaseCartUnit(product)"
-                  ></VIcon>
-                </template>
-
-                <template #append-inner>
-                  <VIcon
-                    class="cursor-pointer"
-                    icon="$mdiPlus"
-                    @click.stop
-                    @mousedown.stop="increaseCartUnit(product)"
-                  />
-                </template>
-              </VTextField>
-            </VCol>
-            <VCol class="d-flex justify-end" cols="7">
-              <VBtn
-                class="mr-2"
-                color="transparent"
-                size="47"
-                @mousedown.stop="removeProductFromCart(product)"
-              >
-                <VIcon class="mt-n1" icon="$mdiTrashCanOutline" size="20" />
-              </VBtn>
-            </VCol>
-          </VRow>
+          <div class="d-flex justify-between py-1">
+            <VRow class="align-center pl-2">
+              <VCol cols="5">
+                <QuantitySelector
+                  v-model="product._cart.units"
+                  max="999"
+                  @decrease="decreaseCartUnit(product)"
+                  @increase="increaseCartUnit(product)"
+                />
+              </VCol>
+              <VCol class="d-flex justify-end" cols="7">
+                <VBtn
+                  class="mr-2"
+                  color="transparent"
+                  size="47"
+                  @mousedown.stop="removeProductFromCart(product)"
+                >
+                  <VIcon class="mt-n1" icon="$mdiTrashCanOutline" size="20" />
+                </VBtn>
+              </VCol>
+            </VRow>
+          </div>
         </div>
       </VCard>
     </template>
@@ -99,7 +78,7 @@
         </VListItem>
       </VList>
       <div class="mx-3 mb-3">
-        <VBtn block>Confirmar Compra</VBtn>
+        <VBtn block color="primary">Confirmar Compra</VBtn>
       </div>
     </template>
   </VNavigationDrawer>
@@ -110,20 +89,6 @@ const { cartDrawer, cart, removeProductFromCart, increaseCartUnit, decreaseCartU
   makeStoreDestructurable(useProductStore())
 
 const clicked = ref(false)
-
-// This function checks if the entered value exceeds the maximum allowed value of 999.
-// If the value is greater than 999, it updates the units property of the given product
-// object to 999.
-function valueThreshold(event, product) {
-  // Get the entered value from the event object
-  const value = event.target.value
-
-  // Check if the entered value is greater than 999
-  if (value > 999) {
-    // If the value exceeds 999, set the units property of the product object to '999'
-    product._cart.units = 999
-  }
-}
 </script>
 
 <style scoped>
