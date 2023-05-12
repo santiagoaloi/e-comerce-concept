@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <h1>{{ top }} </h1>
+    <slot name="append" />
+    <h1 v-if="top">{{ top }} </h1>
     <p>{{ title }}</p>
     <p>{{ subtitle }}</p>
   </div>
