@@ -2,13 +2,7 @@ import { createVuetify } from 'vuetify'
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 
 // Default configurations
-import {
-  defaultsCustom,
-  defaultsNative,
-  theme,
-  icons,
-  aliases as componentAliases
-} from '@/config/vuetify'
+import { defaultsCustom, defaultsNative, theme, icons, aliases } from '@/config/vuetify'
 
 // Dont import @/@core/scss/vuetify/_variables.scss
 // as it is imported by vuetify plugin in vite.config.js
@@ -22,8 +16,10 @@ export const install = (app) => {
     components: {
       VSkeletonLoader
     },
-
-    theme,
+    defaults: {
+      ...defaultsCustom,
+      ...defaultsNative
+    },
     icons: {
       defaultSet: 'mdiSvg',
       aliases: {
@@ -35,13 +31,8 @@ export const install = (app) => {
         mdiSvg
       }
     },
-    aliases: {
-      ...componentAliases
-    },
-    defaults: {
-      ...defaultsCustom,
-      ...defaultsNative
-    }
+    theme,
+    aliases
   })
 
   app.use(vuetify)
