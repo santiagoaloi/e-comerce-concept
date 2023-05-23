@@ -2,6 +2,7 @@
   <div>
     <GSnackbar />
     <CartDrawer />
+    <FilterDrawer />
     <GAppBar />
     <VMain scrollable>
       <RouterView v-slot="{ Component }">

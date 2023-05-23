@@ -6,7 +6,9 @@ export const useProductStore = defineStore('global-products', {
     products: [],
     favorites: [],
     isLoading: false,
-    cartDrawer: false
+    cartDrawer: false,
+    filterDrawer: true,
+    selectedFilter: []
   }),
 
   persist: {
@@ -123,6 +125,27 @@ export const useProductStore = defineStore('global-products', {
         url: `/publicProduct.getAll?page=${page}`,
         method: 'post'
       })
+    },
+
+    async filterProducts(item) {
+      // Send a post request to the backend API to retrieve the paginated list of products
+      const products = await request({
+        url: `/getFilteredProducts`,
+        method: 'post',
+        data: { categories: [item] }
+      })
+
+      // Simplify the path to the paginated products
+      const paginatedProducts = products.data.result
+
+      // Add the _cart object to every product
+      paginatedProducts.data = paginatedProducts.data.map((product) => ({
+        ...product,
+        _cart: { units: 0, favorite: false }
+      }))
+
+      // Assign the paginated products to state
+      this.products = paginatedProducts
     },
 
     /**
