@@ -1,8 +1,8 @@
 <template>
   <VAppBar
     border="b"
+    class="elevation-15"
     color="appbar-background"
-    elevation="15"
     height="72"
     title="e-comerce concept"
   >

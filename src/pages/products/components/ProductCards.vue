@@ -5,7 +5,7 @@
         <template v-for="product in products" :key="product.id">
           <ProductCard
             v-if="!isLoading && products.length"
-            :cart-product="productExists(product.id)"
+            :cart-product="isInCart(product.id)"
             :price="product.price_base"
             :rating="2"
             :title="product.name"
@@ -43,7 +43,7 @@ const {
   increaseCartUnit,
   decreaseCartUnit,
   removeProductFromCart,
-  productExists,
+  isInCart,
   routeQueryPage
 } = makeStoreDestructurable(useProductStore())
 

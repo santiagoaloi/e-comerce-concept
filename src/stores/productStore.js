@@ -54,7 +54,7 @@ export const useProductStore = defineStore('global-products', {
      * @param {number} id - The ID of the product to check for.
      * @returns {object|undefined} - The product object if found, undefined otherwise.
      */
-    productExists(id) {
+    isInCart(id) {
       // Find the product with the specified ID in the cart and return it
       return this.cart.find((cartProduct) => cartProduct.id === id)
     },
@@ -74,25 +74,23 @@ export const useProductStore = defineStore('global-products', {
     },
 
     /**
-     * Decreases the number of units of a product in the shopping cart by 1.
-     * @param {Object} product - The product object to decrease units for.
+     * Decreases the number of units for the given product in the cart.
+     *
+     * @param {object} product - The product to be decreased in the cart.
      */
     decreaseCartUnit(product) {
       // Check if the product already exists in the cart.
-      const productExists = this.productExists(product.id)
+      const cartProduct = this.isInCart(product.id)
 
-      // If the product exists and has more than one unit, decrease the number of units by 1 and return.
-      if (productExists && productExists._cart.units > 1) {
-        productExists._cart.units -= 1
-        return
+      // If the cartProduct has more than one unit, decrease the number of units by 1.
+      if (cartProduct._cart.units > 1) {
+        cartProduct._cart.units -= 1
       }
-
-      // If the product exists but has only one unit, remove it from the cart.
-      if (productExists && productExists._cart.units === 1) {
-        this.removeProductFromCart(productExists)
+      // If the cartProduct has only one unit, remove it from the cart.
+      else {
+        this.removeProductFromCart(cartProduct)
       }
     },
-
     /**
      * Increases the unit count of a product in the cart.
      * If the product is not already in the cart, it will be added.
@@ -101,17 +99,17 @@ export const useProductStore = defineStore('global-products', {
      */
     increaseCartUnit(product) {
       // Check if the product already exists in the cart
-      const productExists = this.productExists(product.id)
+      const cartProduct = this.isInCart(product.id)
 
       // If the product does not exist in the cart, add it with a unit count of 1
-      if (!productExists) {
+      if (!cartProduct) {
         product._cart.units += 1
         this.cart.push(product)
         return
       }
 
       // If the product exists in the cart, increase its unit count by 1
-      if (productExists._cart.units < 999) productExists._cart.units += 1
+      if (cartProduct._cart.units < 999) cartProduct._cart.units += 1
     },
 
     /**
@@ -146,9 +144,10 @@ export const useProductStore = defineStore('global-products', {
         const paginatedProducts = products.data.result
 
         // Add the _cart object to every product
-        paginatedProducts.data = paginatedProducts.data.map((product) => {
-          return { ...product, _cart: { units: 0, favorite: false } }
-        })
+        paginatedProducts.data = paginatedProducts.data.map((product) => ({
+          ...product,
+          _cart: { units: 0, favorite: false }
+        }))
 
         // Assign the paginated products to state
         this.products = paginatedProducts
@@ -162,7 +161,7 @@ export const useProductStore = defineStore('global-products', {
     }
 
     // toggleFavoriteInCart(product) {
-    //   const favoriteExists = this.productExists(product.id)
+    //   const favoriteExists = this.isInCart(product.id)
 
     //   if (favoriteExists) {
     //     favoriteExists._cart.favorite = !favoriteExists._cart.favorite

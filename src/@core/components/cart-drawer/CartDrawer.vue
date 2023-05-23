@@ -1,7 +1,7 @@
 <template>
   <VNavigationDrawer v-model="cartDrawer" color="drawer" elevation="10" width="360">
     <template #prepend>
-      <div class="d-flex align-center border-b py-2">
+      <div class="flex items-center border-b py-2">
         <div class="flex items-center py-2 pl-4 justify-between">
           <VImg class="logo" />
         </div>
@@ -23,17 +23,17 @@
         @mouseup="clicked = false"
       >
         <div v-motion-pop>
-          <div class="d-flex flex-no-wrap">
+          <div class="flex flex-no-wrap">
             <VAvatar class="mx-2 mt-3" rounded="0" size="115">
               <VImg src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></VImg>
             </VAvatar>
-            <div class="d-flex flex-column gap-1">
+            <div class="flex flex-col gap-1">
               <div class="mt-3">Martillo multicolor de madera dura press and tag and stick</div>
               <small>Ellie Goulding</small>
               <small class="text-green">$500</small>
             </div>
           </div>
-          <div class="d-flex justify-between py-1">
+          <div class="flex justify-between py-1">
             <VRow class="align-center pl-2">
               <VCol cols="5">
                 <QuantitySelector
@@ -43,7 +43,7 @@
                   @increase="increaseCartUnit(product)"
                 />
               </VCol>
-              <VCol class="d-flex justify-end" cols="7">
+              <VCol class="flex justify-end" cols="7">
                 <VBtn
                   class="mr-2"
                   color="transparent"
@@ -59,7 +59,7 @@
       </VCard>
     </template>
     <VFadeTransition hide-on-leave>
-      <div v-if="!cart.length" class="d-flex flex-column fill-height align-center justify-center">
+      <div v-if="!cart.length" class="flex flex-col h-full items-center justify-center">
         <EmptyCart />
         <div>No hay productos en el carrito</div>
       </div>

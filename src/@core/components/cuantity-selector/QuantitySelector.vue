@@ -20,10 +20,11 @@
       />
       <VBtn
         :disabled="count >= max"
+        v-on-long-press="[incraseUnits, { delay: 500, modifiers: { stop: true } }]"
         class="rounded-md"
         icon="$plus"
         variant="text"
-        @mousedown.stop="inc(), emit('increase')"
+        @mousedown.stop="incraseUnits"
       />
     </div>
   </div>
@@ -31,6 +32,7 @@
 
 <script setup>
 import { useCounter } from '@vueuse/core'
+import { vOnLongPress } from '@vueuse/components'
 
 const emit = defineEmits(['update:modelValue', 'increase', 'decrease'])
 
@@ -69,6 +71,10 @@ function handleOnChange(event) {
   emit('update:modelValue', count.value)
 }
 
+function incraseUnits() {
+  inc(), emit('increase')
+}
+
 // Use the watch function from Vue to watch for changes to the modelValue prop
 watch(
   () => props.modelValue,
@@ -89,6 +95,6 @@ watch(
 }
 
 .field {
-   @apply appearance-none mx-2 w-8 text-center bg-transparent font-medium outline-none
+@apply appearance-none mx-2 w-8 text-center bg-transparent font-medium outline-none
 }
 </style>

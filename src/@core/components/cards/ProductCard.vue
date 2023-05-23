@@ -5,7 +5,7 @@
     @mouseup="clicked = false"
   >
     <div v-motion-fade class="card-wrapper">
-      <VImg class="card-image" cover height="250" src="https://placehold.co/600x400/png">
+      <VImg cover class="card-image" height="250" src="https://placehold.co/600x400/png">
         <div class="card-top-elements">
           <div>
             <VChip class="bg-primary">{{ discount }}% off</VChip>
@@ -14,10 +14,10 @@
           <div>
             <VFadeTransition>
               <VChip
-                v-if="cartProduct?._cart.units"
                 :text="cartProduct?._cart.units"
-                append-icon="$mdiCartOutline"
+                v-if="cartProduct?._cart.units"
                 class="bg-primary"
+                append-icon="$mdiCartOutline"
                 closable
                 @click:close="$emit('clear')"
                 @mousedown.stop
@@ -125,7 +125,7 @@ const buttonActions = [
 </script>
 
 <style scoped>
-.card { 
+.card {
   @apply p-5 rounded-lg
 }
 
@@ -134,7 +134,7 @@ const buttonActions = [
 }
 
 .card-top-elements {
-  @apply flex opacity-90 items-center text-xl font-semibold 
+  @apply flex opacity-90 items-center text-xl font-semibold
 }
 
 .card-image {
@@ -167,7 +167,7 @@ const buttonActions = [
 }
 
 .card-price {
-  @apply  flex
+  @apply flex
 }
 
 .card-header {
@@ -179,6 +179,6 @@ const buttonActions = [
 }
 
 .active-push-down {
-  @apply cursor-pointer shadow-md duration-500 active:translate-y-[1.2px] active:shadow-sm active:duration-500
+  @apply cursor-pointer shadow-md duration-500 translate-y-[1.2px] active:shadow-sm active:duration-500
 }
 </style>

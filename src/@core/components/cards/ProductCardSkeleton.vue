@@ -1,13 +1,13 @@
 <template>
   <ProductCardWrapper>
-    <div class="card-wrapper">
+    <div class="skeleton-wrapper">
       <VSkeletonLoader type="image, article" />
     </div>
   </ProductCardWrapper>
 </template>
 
 <style scoped>
-.card-wrapper {
+.skeleton-wrapper {
   @apply flex h-full flex-col gap-4
 }
 </style>

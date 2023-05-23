@@ -6,6 +6,9 @@
 </template>
 
 <script setup>
+// Vuetifys theme switch
 const { currentTheme } = toRefs(useAppStore())
+
+// Sync tailwind with Vuetify
 useTailwindTheme(currentTheme)
 </script>
