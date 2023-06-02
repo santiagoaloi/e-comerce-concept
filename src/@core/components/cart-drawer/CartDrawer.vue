@@ -1,5 +1,5 @@
 <template>
-  <VNavigationDrawer v-model="cartDrawer" color="drawer" elevation="10" width="360">
+  <VNavigationDrawer location="end" v-model="cartDrawer" color="drawer" elevation="10" width="360">
     <template #prepend>
       <div class="flex items-center border-b py-2">
         <div class="flex items-center py-2 pl-4 justify-between">
@@ -38,7 +38,7 @@
               <VCol cols="5">
                 <QuantitySelector
                   v-model="product._cart.units"
-                  max="999"
+                  :max="999"
                   @decrease="decreaseCartUnit(product)"
                   @increase="increaseCartUnit(product)"
                 />
@@ -86,7 +86,7 @@
 
 <script setup>
 const { cartDrawer, cart, removeProductFromCart, increaseCartUnit, decreaseCartUnit } =
-  makeStoreDestructurable(useProductStore())
+  storeToRefsVerbose(useProductStore())
 
 const clicked = ref(false)
 </script>

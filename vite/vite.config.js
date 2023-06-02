@@ -77,7 +77,7 @@ export default defineConfig({
   build: {
     assetsDir: 'static/assets',
 
-    /** Eliminate the warning that the package size exceeds 500kb */
+    /** Eliminate the warning that the package si   ze exceeds 500kb */
     chunkSizeWarningLimit: 2000,
 
     // Turning off brotliSize display can slightly reduce packaging time

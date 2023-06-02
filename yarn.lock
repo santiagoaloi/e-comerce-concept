@@ -645,6 +645,14 @@
     style-value-types "^5.1.0"
     vue-demi "*"
 
+"@vueuse/router@^10.1.2":
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/@vueuse/router/-/router-10.1.2.tgz#b0ea3c47066d93ae49f83ce9ab62df2c5abfd08f"
+  integrity sha512-99KhTBZliU5gRPHPhi7UO97vArgWIYLomLeCPYJQvbg1gYYa3BVX/uFDcdOaVYhdz5rWDeY/DaeW5CeNYR7zzQ==
+  dependencies:
+    "@vueuse/shared" "10.1.2"
+    vue-demi ">=0.14.0"
+
 "@vueuse/shared@10.1.2":
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-10.1.2.tgz#31d8733a217a6396eb67706319133bf62cdd8baa"

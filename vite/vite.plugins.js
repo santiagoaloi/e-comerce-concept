@@ -37,7 +37,10 @@ export function createVitePlugins() {
 
         {
           // Pinia destructurable helper, works with functions too.
-          'pinia-make-destructurable': ['makeStoreDestructurable'],
+          'pinia-make-destructurable': [
+            ['makeStoreDestructurable'],
+            ['makeStoreDestructurable', 'storeToRefsVerbose']
+          ],
 
           // Vue Router
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter', 'useRoute'],

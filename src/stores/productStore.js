@@ -8,7 +8,12 @@ export const useProductStore = defineStore('global-products', {
     isLoading: false,
     cartDrawer: false,
     filterDrawer: true,
-    selectedFilter: []
+    selectedFilters: {
+      families: [],
+      brands: [],
+      categories: []
+    },
+    filters: []
   }),
 
   persist: {
@@ -21,11 +26,6 @@ export const useProductStore = defineStore('global-products', {
     cartUnitsAdded() {
       // Sum up all units in `products._cart.units` in all cart product objects.
       return this.cart.reduce((arg, prod) => (arg += prod._cart.units), 0)
-    },
-
-    routeQueryPage() {
-      // If the URL has no page value, the 1st page is requested.
-      return Number(this.router.currentRoute.value.query.page) || 1
     }
   },
 
@@ -85,14 +85,11 @@ export const useProductStore = defineStore('global-products', {
       const cartProduct = this.isInCart(product.id)
 
       // If the cartProduct has more than one unit, decrease the number of units by 1.
-      if (cartProduct._cart.units > 1) {
+      if (cartProduct?._cart?.units > 1) {
         cartProduct._cart.units -= 1
       }
-      // If the cartProduct has only one unit, remove it from the cart.
-      else {
-        this.removeProductFromCart(cartProduct)
-      }
     },
+
     /**
      * Increases the unit count of a product in the cart.
      * If the product is not already in the cart, it will be added.
@@ -115,28 +112,44 @@ export const useProductStore = defineStore('global-products', {
     },
 
     /**
+     * Retrieves filter values from the backend for families, brands, and categories.
+     */
+    async getFilterValues() {
+      const endpoints = ['/getAllFamilies', '/getAllBrands', '/getAllCategories']
+
+      const responses = await Promise.all(
+        endpoints.map((endpoint) =>
+          request([{ method: 'post', url: endpoint, data: { company_id: 1 } }])
+        )
+      )
+
+      this.filters = Object.fromEntries(
+        responses.map((r, i) => [['families', 'brands', 'categories'][i], r.result])
+      )
+    },
+
+    /**
      * Retrieves a paginated list of products from the backend.
      * @param {number} page - The page number of the products to retrieve.
      * @returns {Promise} - A promise that resolves with the paginated list of products.
      */
     getProducts(page) {
       // Send a post request to the backend API to retrieve the paginated list of products
-      return request({
-        url: `/publicProduct.getAll?page=${page}`,
-        method: 'post'
-      })
+      return request([
+        {
+          url: `/publicProduct.getAll?page=${page}`,
+          method: 'post'
+        }
+      ])
     },
 
-    async filterProducts(item) {
-      // Send a post request to the backend API to retrieve the paginated list of products
-      const products = await request({
-        url: `/getFilteredProducts`,
-        method: 'post',
-        data: { categories: [item] }
-      })
-
+    /**
+     * Handles the paginated product results by updating the state.
+     * @param {object} products - The paginated product results.
+     */
+    paginateProductResults(products) {
       // Simplify the path to the paginated products
-      const paginatedProducts = products.data.result
+      const paginatedProducts = products.result
 
       // Add the _cart object to every product
       paginatedProducts.data = paginatedProducts.data.map((product) => ({
@@ -148,32 +161,37 @@ export const useProductStore = defineStore('global-products', {
       this.products = paginatedProducts
     },
 
+    async filterProducts(selectedIds) {
+      // Send a post request to the backend API to retrieve the filtered products
+      this.paginateProductResults(
+        await request([
+          {
+            url: `/getFilteredProducts`,
+            method: 'post',
+            data: { categories: [selectedIds], company_id: 1 }
+          }
+        ])
+      )
+    },
+
     /**
      * Switches the pagination page, fetching and displaying the paginated products from the backend.
      * @param {number} page - The page number to switch to.
      */
     async switchPaginationPage(page) {
       try {
-        //Trigger spinners and loading state.
+        // Trigger spinners and loading state.
         this.setLoading().start()
 
-        // Fetch the paginated products from the backend
-        const products = await this.getProducts(page)
-
-        // Update the URL to reflect the new page number
-        this.router.push({ path: '/', query: { page } })
-
-        // Simplify the path to the paginated products
-        const paginatedProducts = products.data.result
-
-        // Add the _cart object to every product
-        paginatedProducts.data = paginatedProducts.data.map((product) => ({
-          ...product,
-          _cart: { units: 0, favorite: false }
-        }))
-
-        // Assign the paginated products to state
-        this.products = paginatedProducts
+        this.paginateProductResults(
+          await request([
+            {
+              url: `/publicProduct.getAll?page=${page}`,
+              method: 'post',
+              data: { company_id: 4, results_per_page: 20 }
+            }
+          ])
+        )
       } catch (e) {
         // Log any errors that occur during pagination.
         console.error(e)
@@ -182,15 +200,6 @@ export const useProductStore = defineStore('global-products', {
         this.setLoading().done()
       }
     }
-
-    // toggleFavoriteInCart(product) {
-    //   const favoriteExists = this.isInCart(product.id)
-
-    //   if (favoriteExists) {
-    //     favoriteExists._cart.favorite = !favoriteExists._cart.favorite
-    //     return
-    //   }
-    // },
   }
 })
 

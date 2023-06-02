@@ -19,6 +19,7 @@
     "@vueuse/components": "^10.1.2",
     "@vueuse/core": "^10.1.0",
     "@vueuse/motion": "^2.0.0-beta.12",
+    "@vueuse/router": "^10.1.2",
     "axios": "^1.4.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.22",

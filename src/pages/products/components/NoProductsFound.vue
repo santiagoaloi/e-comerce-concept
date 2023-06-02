@@ -11,5 +11,5 @@
   </div>
 </template>
 <script setup>
-const { isLoading, products } = makeStoreDestructurable(useProductStore())
+const { isLoading, products } = storeToRefsVerbose(useProductStore())
 </script>

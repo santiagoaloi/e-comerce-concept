@@ -20,7 +20,7 @@
         </template>
       </div>
     </VCard>
-    <VCard border="0" class="pagination-wrapper rounded-0">
+    <VCard border="0" elevation="0" class="pagination-wrapper rounded-0">
       <VPagination
         v-model="currentPage"
         :disabled="isLoading"
@@ -35,6 +35,8 @@
 </template>
 
 <script setup>
+import { useRouteQuery } from '@vueuse/router'
+
 const {
   isLoading,
   products: paginatedProducts,
@@ -43,16 +45,17 @@ const {
   increaseCartUnit,
   decreaseCartUnit,
   removeProductFromCart,
-  isInCart,
-  routeQueryPage
-} = makeStoreDestructurable(useProductStore())
-
-/**  The default value of currentPage comes from the url. */
-const currentPage = ref(routeQueryPage.value)
+  isInCart
+} = storeToRefsVerbose(useProductStore())
 
 const products = computed(() => paginatedProducts.value.data)
 
-/**  Listen to the currentPage value and call the backend */
+const currentPage = useRouteQuery('page', 1, {
+  transform: parseInt,
+  mode: 'push'
+})
+
+/** Listen to the currentPage value and call the backend */
 /** requesting a specific paginated page. */
 watchEffect(async () => {
   switchPaginationPage(currentPage.value)
@@ -67,7 +70,7 @@ watchEffect(async () => {
   @apply overflow-auto h-full bg-transparent p-5 
 }
 .product-cards-grid {
-  @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3
+  @apply grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2
 }
 .pagination-wrapper {
   @apply flex flex-col items-center bg-transparent p-2 

@@ -6,7 +6,7 @@ function createService() {
 }
 
 function createRequestFunction(service) {
-  return function (config) {
+  return async function (configArray) {
     const configDefault = {
       headers: {
         /**  Authorization: 'Bearer ' + getToken(), */
@@ -17,7 +17,14 @@ function createRequestFunction(service) {
       baseURL: import.meta.env.VITE_BaseApiURL,
       data: {}
     }
-    return service({ ...configDefault, ...config })
+
+    // Make all the requests in parallel
+    const responses = await axios.all(
+      configArray.map((config) => service({ ...configDefault, ...config }))
+    )
+
+    // Return an array of response data
+    return responses.length === 1 ? responses[0].data : responses.map((response) => response.data)
   }
 }
 

@@ -1,27 +1,34 @@
 <template>
   <VNavigationDrawer
-    location="end"
+    location="start"
     v-model="filterDrawer"
     color="drawer"
     elevation="10"
-    width="360"
+    width="280"
   >
     <template #prepend>
-      <div class="flex items-center border-b py-2">
-        <v-select
-          @update:modelValue="filterProducts"
-          :items="[{ category: 'telefonos', id: 14 }]"
-          itemTitle="category"
-          itemValue="id"
-          v-model="selectedFilter"
-        />
-      </div>
+      <VContainer>
+        <div v-for="(field, label) in filters" class="flex items-center">
+          <v-select
+            :label="label"
+            :items="field"
+            itemTitle="name"
+            itemValue="id"
+            v-model="selectedFilters[label]"
+            multiple
+          />
+        </div>
+        <v-btn block>Filtrar</v-btn>
+      </VContainer>
     </template>
   </VNavigationDrawer>
 </template>
 
 <script setup>
-const { filterDrawer, selectedFilter, filterProducts } = makeStoreDestructurable(useProductStore())
+const { filters, filterDrawer, selectedFilters, filterProducts, getFilterValues } =
+  storeToRefsVerbose(useProductStore())
+
+getFilterValues()
 </script>
 
 <style scoped>

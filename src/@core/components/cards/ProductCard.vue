@@ -14,7 +14,6 @@
           <div>
             <VFadeTransition>
               <VChip
-                :text="cartProduct?._cart.units"
                 v-if="cartProduct?._cart.units"
                 class="bg-primary"
                 append-icon="$mdiCartOutline"
@@ -119,8 +118,8 @@ defineProps({
 const clicked = ref(false)
 
 const buttonActions = [
-  { action: () => emit('remove'), icon: '$mdiMinus' },
-  { action: () => emit('add'), icon: '$mdiPlus' }
+  { action: () => emit('remove'), icon: '$mdiMinus', name: 'remove' },
+  { action: () => emit('add'), icon: '$mdiPlus', name: 'add' }
 ]
 </script>
 
