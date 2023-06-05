@@ -1,32 +1,31 @@
 <template>
   <VNavigationDrawer
     location="start"
-    v-model="filterDrawer"
+    v-model="drawers.filterDrawer"
     color="drawer"
     elevation="10"
     width="280"
   >
     <template #prepend>
       <VContainer>
-        <div v-for="(field, label) in filters" class="flex items-center">
-          <v-select
+        <div v-for="(field, label) in filters.filterData" class="flex items-center">
+          <v-autocomplete
             :label="label"
             :items="field"
             itemTitle="name"
             itemValue="id"
-            v-model="selectedFilters[label]"
+            v-model="filters.selectedFilters[label]"
             multiple
           />
         </div>
-        <v-btn block>Filtrar</v-btn>
+        <v-btn @click="filterProducts()" block>Filtrar</v-btn>
       </VContainer>
     </template>
   </VNavigationDrawer>
 </template>
 
 <script setup>
-const { filters, filterDrawer, selectedFilters, filterProducts, getFilterValues } =
-  storeToRefsVerbose(useProductStore())
+const { filters, drawers, filterProducts, getFilterValues } = storeToRefsVerbose(useProductStore())
 
 getFilterValues()
 </script>

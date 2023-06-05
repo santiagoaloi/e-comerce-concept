@@ -21,6 +21,7 @@
                 @click:close="$emit('clear')"
                 @mousedown.stop
               >
+                {{ cartProduct?._cart.units }}
               </VChip>
             </VFadeTransition>
           </div>

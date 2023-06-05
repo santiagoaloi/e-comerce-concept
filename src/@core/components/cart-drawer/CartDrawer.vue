@@ -1,5 +1,11 @@
 <template>
-  <VNavigationDrawer location="end" v-model="cartDrawer" color="drawer" elevation="10" width="360">
+  <VNavigationDrawer
+    location="end"
+    v-model="drawers.cartDrawer"
+    color="drawer"
+    elevation="10"
+    width="360"
+  >
     <template #prepend>
       <div class="flex items-center border-b py-2">
         <div class="flex items-center py-2 pl-4 justify-between">
@@ -7,7 +13,7 @@
         </div>
         <VSpacer />
         <div class="mr-4">
-          <VBtn icon="$close" size="small" variant="text" @mousedown="cartDrawer = false" />
+          <VBtn icon="$close" size="small" variant="text" @mousedown="drawers.cartDrawer = false" />
         </div>
       </div>
     </template>
@@ -85,7 +91,7 @@
 </template>
 
 <script setup>
-const { cartDrawer, cart, removeProductFromCart, increaseCartUnit, decreaseCartUnit } =
+const { drawers, cart, removeProductFromCart, increaseCartUnit, decreaseCartUnit } =
   storeToRefsVerbose(useProductStore())
 
 const clicked = ref(false)

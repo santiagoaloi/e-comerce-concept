@@ -1,5 +1,5 @@
 <template>
-  <VContainer v-if="products?.length" class="top-container">
+  <VContainer :fluid="!xlAndUp" class="top-container">
     <VCard :disabled="isLoading" border="0" class="top-card" elevation="0" flat>
       <div class="product-cards-grid">
         <template v-for="product in products" :key="product.id">
@@ -20,7 +20,7 @@
         </template>
       </div>
     </VCard>
-    <VCard border="0" elevation="0" class="pagination-wrapper rounded-0">
+    <VCard v-if="products?.length" border="0" elevation="0" class="pagination-wrapper rounded-0">
       <VPagination
         v-model="currentPage"
         :disabled="isLoading"
@@ -48,6 +48,8 @@ const {
   isInCart
 } = storeToRefsVerbose(useProductStore())
 
+const { xlAndUp } = useDisplay()
+
 const products = computed(() => paginatedProducts.value.data)
 
 const currentPage = useRouteQuery('page', 1, {
@@ -70,8 +72,8 @@ watchEffect(async () => {
   @apply overflow-auto h-full bg-transparent p-5 
 }
 .product-cards-grid {
-  @apply grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2
-}
+  @apply grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 
+} 
 .pagination-wrapper {
   @apply flex flex-col items-center bg-transparent p-2 
 }

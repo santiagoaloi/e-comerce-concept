@@ -77,8 +77,8 @@ html,
   border-width: 0 0 0px !important;
 }
 
-@media (min-width: 960px) {
+/* @media (min-width: 960px) {
   .v-container {
     max-width: 1200px !important;
   }
-}
+} */

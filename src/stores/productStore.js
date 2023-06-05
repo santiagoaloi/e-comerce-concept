@@ -6,14 +6,20 @@ export const useProductStore = defineStore('global-products', {
     products: [],
     favorites: [],
     isLoading: false,
-    cartDrawer: false,
-    filterDrawer: true,
-    selectedFilters: {
-      families: [],
-      brands: [],
-      categories: []
+    drawers: {
+      cartDrawer: false,
+      filterDrawer: true
     },
-    filters: []
+
+    filters: {
+      selectedFilters: {},
+      filterData: []
+    },
+
+    requestOptions: {
+      company_id: 6,
+      results_per_page: 20
+    }
   }),
 
   persist: {
@@ -115,32 +121,17 @@ export const useProductStore = defineStore('global-products', {
      * Retrieves filter values from the backend for families, brands, and categories.
      */
     async getFilterValues() {
-      const endpoints = ['/getAllFamilies', '/getAllBrands', '/getAllCategories']
+      const endpoints = ['/getAllCategories', '/getAllFamilies', '/getAllBrands']
 
       const responses = await Promise.all(
         endpoints.map((endpoint) =>
-          request([{ method: 'post', url: endpoint, data: { company_id: 1 } }])
+          request([{ method: 'post', url: endpoint, data: { ...this.requestOptions } }])
         )
       )
 
-      this.filters = Object.fromEntries(
-        responses.map((r, i) => [['families', 'brands', 'categories'][i], r.result])
+      this.filters.filterData = Object.fromEntries(
+        responses.map((r, i) => [['categories', 'families', 'brands'][i], r.result])
       )
-    },
-
-    /**
-     * Retrieves a paginated list of products from the backend.
-     * @param {number} page - The page number of the products to retrieve.
-     * @returns {Promise} - A promise that resolves with the paginated list of products.
-     */
-    getProducts(page) {
-      // Send a post request to the backend API to retrieve the paginated list of products
-      return request([
-        {
-          url: `/publicProduct.getAll?page=${page}`,
-          method: 'post'
-        }
-      ])
     },
 
     /**
@@ -161,14 +152,14 @@ export const useProductStore = defineStore('global-products', {
       this.products = paginatedProducts
     },
 
-    async filterProducts(selectedIds) {
+    async filterProducts() {
       // Send a post request to the backend API to retrieve the filtered products
       this.paginateProductResults(
         await request([
           {
             url: `/getFilteredProducts`,
             method: 'post',
-            data: { categories: [selectedIds], company_id: 1 }
+            data: { selectedFilters: this.filters.selectedFilters, ...this.requestOptions }
           }
         ])
       )
@@ -179,16 +170,16 @@ export const useProductStore = defineStore('global-products', {
      * @param {number} page - The page number to switch to.
      */
     async switchPaginationPage(page) {
-      try {
-        // Trigger spinners and loading state.
-        this.setLoading().start()
+      // Trigger spinners and loading state.
+      this.setLoading().start()
 
+      try {
         this.paginateProductResults(
           await request([
             {
               url: `/publicProduct.getAll?page=${page}`,
               method: 'post',
-              data: { company_id: 4, results_per_page: 20 }
+              data: { ...this.requestOptions }
             }
           ])
         )

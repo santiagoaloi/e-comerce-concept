@@ -2,12 +2,12 @@
   <div class="menu-wrapper">
     <GAppBarThemeSwitch />
     <!-- <GappBarFavoriteCounter /> -->
-    <GappBarAddedCounter @click="cartDrawer = !cartDrawer" />
+    <GappBarAddedCounter @click="drawers.cartDrawer = !drawers.cartDrawer" />
   </div>
 </template>
 
 <script setup>
-const { cartDrawer } = toRefs(useProductStore())
+const { drawers } = toRefs(useProductStore())
 </script>
 <style scoped>
 .menu-wrapper {
